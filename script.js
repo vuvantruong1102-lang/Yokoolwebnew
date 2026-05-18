@@ -792,9 +792,9 @@
   // Update the 3 links below with Tamayoko's real channels.
   const CONTACT_CONFIG = {
     messenger: 'https://m.me/tamayokoofficial',  // Tamayoko Facebook Page
-    zalo: 'https://zalo.me/0971222822',          // Tamayoko Zalo
-    phone: '0971222822',                          // Hotline thật (dùng cho tel:)
-    phoneDisplay: '0971 222 822',                 // Hotline hiển thị tooltip
+    zalo: 'https://zalo.me/0822838665',          // Tamayoko Zalo
+    phone: '0822838665',                          // Hotline thật (dùng cho tel:)
+    phoneDisplay: '0822 838 665',                 // Hotline hiển thị tooltip
   };
 
   function injectContactWidget() {
