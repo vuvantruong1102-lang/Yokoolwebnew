@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Liên hệ Tamayoko - hotline, email, Zalo, Shopee, địa chỉ văn phòng. Đội ngũ phản hồi trong 30 phút giờ hành chính.">
+  <meta name="theme-color" content="#FFFFFF">
+  <title>Liên hệ — Tamayoko</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" aria-label="Tamayoko trang chủ">
+        <img src="images/tamayoko.png" alt="Tamayoko" class="logo-img">
+      </a>
+
+      <nav class="main-nav" aria-label="Điều hướng chính">
+        <a href="index.html" class="nav-link">Trang chủ</a>
+
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">
+            Sạc dự phòng
+            <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="nav-dropdown-panel" role="menu">
+            <a href="products/jp395.html" class="nav-leaf">JP395</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">
+            Củ sạc
+            <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="nav-dropdown-panel" role="menu">
+            <a href="products/rc502.html" class="nav-leaf">RC502</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">
+            Ổ điện du lịch
+            <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="nav-dropdown-panel" role="menu">
+            <a href="products/sl207.html" class="nav-leaf">SL207</a>
+            <a href="products/ol212.html" class="nav-leaf">OL212</a>
+          </div>
+        </div>
+
+        <a href="news.html" class="nav-link">Tin tức</a>
+        <a href="b2b.html" class="nav-link">Hợp tác B2B</a>
+        <a href="lien-he.html" class="nav-link">Liên hệ</a>
+      </nav>
+
+      <button class="cart-icon-btn" id="cartIconBtn" aria-label="Mở giỏ hàng">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 4H5L6 16C6 16.5523 6.44772 17 7 17H17C17.5523 17 18 16.5523 18 16L19 7H7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="9" cy="20" r="1.3" fill="currentColor"/>
+          <circle cx="16" cy="20" r="1.3" fill="currentColor"/>
+        </svg>
+        <span class="cart-badge" aria-label="Số sản phẩm trong giỏ">0</span>
+      </button>
+
+      <a href="https://shopee.vn/tamayokoofficial" target="_blank" rel="noopener" class="cta-button cta-button--small">
+        Mua tại Shopee
+        <span class="cta-arrow">→</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Mở menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="checkout-page">
+    <div class="container">
+      <div class="checkout-header" style="text-align: center;">
+        <span class="section-label">/ Contact</span>
+        <h1 class="checkout-title">Liên hệ với <em style="font-style: normal; color: var(--brand);">Tamayoko</em></h1>
+        <p class="checkout-subtitle" style="max-width: 640px; margin: 16px auto 0;">
+          Đội ngũ của chúng tôi luôn sẵn sàng tư vấn sản phẩm, hỗ trợ đặt hàng, giải đáp bảo hành và đề xuất giải pháp B2B. Phản hồi trong 30 phút giờ hành chính.
+        </p>
+      </div>
+
+      <!-- Contact channels -->
+      <div class="contact-channels" style="margin-top: 48px;">
+        <a href="tel:0971222822" class="contact-channel">
+          <div class="contact-channel-label">Hotline</div>
+          <div class="contact-channel-value">0971.222.822</div>
+        </a>
+        <a href="https://zalo.me/0971222822" target="_blank" rel="noopener" class="contact-channel">
+          <div class="contact-channel-label">Zalo</div>
+          <div class="contact-channel-value">zalo.me/0971222822</div>
+        </a>
+        <a href="mailto:contact@tamayoko.com" class="contact-channel">
+          <div class="contact-channel-label">Email</div>
+          <div class="contact-channel-value">contact@tamayoko.com</div>
+        </a>
+        <a href="https://shopee.vn/tamayokoofficial" target="_blank" rel="noopener" class="contact-channel">
+          <div class="contact-channel-label">Shopee</div>
+          <div class="contact-channel-value">shopee.vn/tamayokoofficial</div>
+        </a>
+      </div>
+
+      <!-- Info cards: working hours + address -->
+      <div class="why-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 880px; margin: 48px auto 0;">
+        <div class="why-card">
+          <div class="why-icon">◷</div>
+          <h3 class="why-title">Giờ làm việc</h3>
+          <p class="why-description">
+            Thứ Hai – Thứ Bảy: 8:00 – 18:00<br>
+            Chủ Nhật: 9:00 – 17:00<br>
+            Nghỉ các ngày lễ Tết.
+          </p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">◆</div>
+          <h3 class="why-title">Văn phòng &amp; kho</h3>
+          <p class="why-description">
+            [Địa chỉ văn phòng — Qun/Huyện, Tỉnh/Thành phố]<br>
+            Hỗ trợ ghé thăm xem hàng theo lịch hẹn trước.
+          </p>
+        </div>
+      </div>
+
+      <!-- Contact form -->
+      <form class="checkout-form-card" id="contactForm" style="margin-top: 48px; max-width: 760px; margin-left: auto; margin-right: auto;" novalidate>
+        <h2 class="checkout-section-title">Gửi yêu cầu tư vấn</h2>
+
+        <div class="form-grid">
+          <div class="form-field">
+            <label class="form-label is-required" for="ct-name">Họ và tên</label>
+            <input class="form-input" type="text" id="ct-name" name="name" required placeholder="Nguyễn Văn A">
+          </div>
+          <div class="form-field">
+            <label class="form-label is-required" for="ct-phone">Số điện thoại</label>
+            <input class="form-input" type="tel" id="ct-phone" name="phone" inputmode="numeric" required placeholder="09xx xxx xxx">
+          </div>
+          <div class="form-field form-field--full">
+            <label class="form-label" for="ct-email">Email (tuỳ chọn)</label>
+            <input class="form-input" type="email" id="ct-email" name="email" placeholder="ban@email.com">
+          </div>
+          <div class="form-field form-field--full">
+            <label class="form-label is-required" for="ct-topic">Nội dung cần tư vấn</label>
+            <textarea class="form-textarea" id="ct-topic" name="topic" required placeholder="Bạn muốn tìm hiểu sản phẩm nào? Vui lòng mô tả nhu cầu cụ thể."></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="cta-button cta-button--large cta-button--full" id="contactSubmitBtn" style="margin-top: 24px;">
+          Gửi yêu cầu
+          <span class="cta-arrow">→</span>
+        </button>
+
+        <p class="form-help" style="text-align: center; margin-top: 16px;">
+          Bằng việc gửi yêu cầu, bạn đồng ý cho Tamayoko liên hệ lại trong 30 phút giờ hành chính.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <img src="images/tamayoko.png" alt="Tamayoko" class="logo-img">
+        </a>
+        <p class="footer-tagline">Công nghệ vì cuộc sống tốt đẹp hơn</p>
+        <div class="footer-company">
+          <p class="footer-company-name">Công ty TNHH Thương mại dịch vụ và sản xuất VNF Việt Nam</p>
+          <p class="footer-company-line">Mã số doanh nghiệp: 2400883385. Giấy chứng nhận đăng ký doanh nghiệp do Sở Kế hoạch và Đầu tư tỉnh Bắc Giang cấp lần đầu ngày 03/03/2020.</p>
+          <p class="footer-company-line">Địa chỉ: KĐT Văn Khê, phường La Khê, quận Hà Đông, TP Hà Nội.</p>
+        </div>
+      </div>
+
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Sản phẩm</h4>
+          <a href="products/sl207.html">SL207</a>
+          <a href="products/ol212.html">OL212</a>
+          <a href="products/jp395.html">JP395</a>
+          <a href="products/rc502.html">RC502</a>
+        </div>
+        <div class="footer-col">
+          <h4>Hỗ trợ</h4>
+          <a href="lien-he.html">Liên hệ</a>
+          <a href="bao-hanh.html">Bảo hành</a>
+          <a href="van-chuyen.html">Vận chuyển</a>
+          <a href="faq.html">Câu hỏi thường gặp</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kênh bán</h4>
+          <a href="https://shopee.vn/tamayokoofficial" target="_blank" rel="noopener">Shopee</a>
+          <a href="https://zalo.me/0971222822" target="_blank" rel="noopener">Zalo</a>
+          <a href="mailto:contact@tamayoko.com">Email</a>
+        </div>
+        <div class="footer-col">
+          <h4>Mạng xã hội</h4>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/tamayokoofficial" target="_blank" rel="noopener" aria-label="Facebook Tamayoko" class="footer-social-link">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/>
+              </svg>
+            </a>
+            <a href="https://www.youtube.com/@tamayokoofficial" target="_blank" rel="noopener" aria-label="YouTube Tamayoko" class="footer-social-link">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M23.5 6.2c-.3-1-1.1-1.8-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6c-1 .3-1.8 1.1-2.1 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8c.3 1 1.1 1.8 2.1 2.1 1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6c1-.3 1.8-1.1 2.1-2.1.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/>
+              </svg>
+            </a>
+            <a href="https://www.tiktok.com/@tamayoko.tech" target="_blank" rel="noopener" aria-label="TikTok Tamayoko" class="footer-social-link">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V9.41a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.84z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 Tamayoko. Made in Vietnam.</p>
+      <p class="footer-meta">v3.5 — Support pages</p>
+    </div>
+  </footer>
+
+  <!-- ============ CART DRAWER ============ -->
+  <div class="cart-drawer-overlay" aria-hidden="true"></div>
+  <aside class="cart-drawer" aria-label="Giỏ hàng">
+    <div class="cart-drawer-header">
+      <h3 class="cart-drawer-title">Giỏ hàng</h3>
+      <button class="cart-drawer-close" aria-label="Đóng giỏ hàng">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="cart-drawer-body">
+      <div id="cartDrawerEmpty" class="cart-drawer-empty">
+        <svg class="cart-drawer-empty-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M10 14H16L18 46C18 47.6569 19.3431 49 21 49H47C48.6569 49 50 47.6569 50 46L52 22H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="26" cy="56" r="3" stroke="currentColor" stroke-width="2"/>
+          <circle cx="44" cy="56" r="3" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <div class="cart-drawer-empty-text">Giỏ hàng đang trống</div>
+        <a href="index.html" class="cta-button cta-button--ghost cta-button--small">Tiếp tục mua sắm</a>
+      </div>
+      <div id="cartDrawerList"></div>
+    </div>
+    <div class="cart-drawer-footer" id="cartDrawerFooter" style="display: none;">
+      <div class="cart-drawer-total-row">
+        <span class="cart-drawer-total-label">Tổng tạm tính</span>
+        <span class="cart-drawer-total-value" id="cartDrawerTotal">0đ</span>
+      </div>
+      <button class="cta-button cta-button--full cta-button--large" id="cartDrawerCheckout">
+        Thanh toán
+        <span class="cta-arrow">→</span>
+      </button>
+      <div class="cart-drawer-hint">Phí vận chuyển sẽ tính ở bước kế tiếp · COD toàn quốc</div>
+    </div>
+  </aside>
+
+  <script src="script.js"></script>
+  <script>
+    // Contact form: gửi tới Google Sheets qua Apps Script webhook (đã cấu hình trong script.js)
+    (function () {
+      const form = document.getElementById('contactForm');
+      const submitBtn = document.getElementById('contactSubmitBtn');
+      if (!form) return;
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Validate basic
+        const data = Object.fromEntries(new FormData(this).entries());
+        if (!data.name || !data.phone || !data.topic) {
+          if (window.TamayokoToast) {
+            window.TamayokoToast('Vui lòng điền đầy đủ thông tin bắt buộc', 'info');
+          } else {
+            alert('Vui lòng điền đầy đủ thông tin bắt buộc');
+          }
+          return;
+        }
+
+        // Validate phone (10-11 digits VN)
+        const phoneClean = String(data.phone).replace(/\s+/g, '');
+        if (!/^0\d{9,10}$/.test(phoneClean)) {
+          if (window.TamayokoToast) {
+            window.TamayokoToast('Số điện thoại không đúng định dạng', 'info');
+          } else {
+            alert('Số điện thoại không đúng định dạng');
+          }
+          return;
+        }
+
+        // Disable button to prevent double-submit
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.style.opacity = '0.6';
+          submitBtn.style.pointerEvents = 'none';
+        }
+
+        const payload = {
+          _type: 'inquiry',
+          name: data.name,
+          phone: phoneClean,
+          email: data.email || '',
+          topic: data.topic,
+          createdAt: new Date().toISOString(),
+        };
+
+        const finish = () => {
+          if (window.TamayokoToast) {
+            window.TamayokoToast('Đã gửi yêu cầu! Tamayoko sẽ liên hệ trong 30 phút');
+          } else {
+            alert('Cảm ơn bạn! Yêu cầu đã được ghi nhận. Đội ngũ Tamayoko sẽ liên hệ lại trong 30 phút giờ hành chính.');
+          }
+          form.reset();
+          if (submitBtn) {
+            setTimeout(() => {
+              submitBtn.disabled = false;
+              submitBtn.style.opacity = '';
+              submitBtn.style.pointerEvents = '';
+            }, 3000);
+          }
+        };
+
+        // Gọi backend qua function expose trong script.js
+        if (window.TamayokoSendToBackend) {
+          window.TamayokoSendToBackend(payload).then((result) => {
+            console.log('[Tamayoko inquiry]', payload, 'backend:', result);
+            finish();
+          });
+        } else {
+          // Fallback nếu chưa có script.js
+          console.warn('Backend chưa sẵn sàng, đơn liên hệ:', payload);
+          finish();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
