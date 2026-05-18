@@ -20,26 +20,26 @@ GÓI NÀY GỒM 29 FILE - chỉ những file CÓ THAY ĐỔI hoặc MỚI:
 
 ⚠️ HÀNH ĐỘNG BỔ SUNG TRÊN GITHUB:
    Sau khi upload xong, vào GitHub web → vào thư mục images/ →
-   XOÁ file cũ "tamayoko.png" (không còn dùng nữa).
+   XOÁ file cũ "Yokool.png" (không còn dùng nữa).
 
 ✅ NHỮNG GÌ ĐÃ THAY:
-   1. Logo Tamayoko → Yokool (header no slogan, footer có slogan)
+   1. Logo Yokool → Yokool (header no slogan, footer có slogan)
    2. Hotline 0971222822 → 0822838665 (mọi định dạng)
-   3. Email contact@tamayoko.com → contact@yokool.vn
-   4. Domain tamayoko.com → yokool.vn
+   3. Email contact@Yokool.com → contact@yokool.vn
+   4. Domain Yokool.com → yokool.vn
    5. Facebook → facebook.com/yokoolvietnam
    6. TikTok → tiktok.com/@yokool.vit.nam
-   7. Shopee → shopee.vn/yokoolofficial
+   7. Shopee → shopee.vn/tamayokoofficial
    8. Zalo number cập nhật theo hotline mới
 
 ❌ NHỮNG GÌ KHÔNG THAY (bạn tự sửa sau):
-   - Text "Tamayoko" / "TAMAYOKO" trong nội dung HTML
-   - alt="Tamayoko" của logo images
-   - aria-label="Facebook Tamayoko" / "TikTok Tamayoko"
+   - Text "Yokool" / "Yokool" trong nội dung HTML
+   - alt="Yokool" của logo images
+   - aria-label="Facebook Yokool" / "TikTok Yokool"
    - Title pages, copyright footer
    - Tên công ty "VNF Việt Nam" (giữ nguyên theo yêu cầu)
    
-   Còn ~249 chỗ text "Tamayoko" trong HTML để bạn search & replace tay
+   Còn ~249 chỗ text "Yokool" trong HTML để bạn search & replace tay
    hoặc nhờ Claude làm sau.
 
 ================================================================
