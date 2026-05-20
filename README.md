@@ -1,219 +1,171 @@
-# Yokool Website — v2.0
+# Tích hợp CloudCMS vào Yokool website
 
-Website tĩnh cho thương hiệu Yokool, giao diện sáng (light theme) với màu chủ đạo **#DC143B** (crimson red). Pure HTML/CSS/JS — không framework, không build step.
+Tích hợp blog/tin tức từ CloudCMS vào website yokool.vn dùng Cloudflare Pages Functions (SSR cho SEO tối ưu).
 
-## Cấu trúc thư mục
+## Cấu trúc file cần upload
 
-```
-Yokool/
-├── index.html              ← Trang chủ (carousel + product grid)
-├── news.html               ← Trang Tin tức (placeholder)
-├── checkout.html           ← Trang thanh toán (đặt hàng COD)
-├── styles.css              ← CSS dùng chung cho cả site
-├── script.js               ← JavaScript (carousel, menu, cart, checkout)
-├── README.md               ← File này
-├── images/                 ← Ảnh và banner (đều là .jpg / .png)
-│   ├── Yokool-logo.png     ← Logo thương hiệu (nền trong suốt)
-│   ├── banner-1.jpg        ← Banner slide 1 — 1600×600
-│   ├── banner-2.jpg        ← Banner slide 2 — 1600×600
-│   ├── banner-3.jpg        ← Banner slide 3 — 1600×600
-│   ├── product-sl207.jpg   ← Ảnh sản phẩm SL207 — 800×800
-│   ├── product-ol212.jpg   ← Ảnh sản phẩm OL212 — 800×800
-│   ├── product-jp395.jpg   ← Ảnh sản phẩm JP395 — 800×800
-│   └── product-rc502.jpg   ← Ảnh sản phẩm RC502 — 800×800
-└── products/               ← Trang chi tiết từng sản phẩm
-    ├── sl207.html
-    ├── ol212.html
-    ├── jp395.html
-    └── rc502.html
-```
-
-## Tính năng e-commerce (v3.0)
-
-### Giỏ hàng (localStorage)
-- Click "Thêm vào giỏ hàng" trên trang sản phẩm → toast thông báo, badge cart icon update
-- Click cart icon ở header → drawer trượt từ phải vào hiển thị giỏ hàng
-- Trong drawer: tăng/giảm số lượng, xoá item, xem tổng tiền
-- Click "Thanh toán" trong drawer → đi đến checkout.html với toàn bộ cart
-
-### Mua ngay (skip cart)
-- Click "Mua ngay" trên trang sản phẩm → đi thẳng đến checkout.html chỉ với 1 sản phẩm đó
-- Cart hiện tại không bị ảnh hưởng (lưu sessionStorage riêng)
-
-### Trang Checkout
-- Form thông tin nhận hàng: Họ tên, SĐT, Email, Tỉnh/Thành, Địa chỉ, Ghi chú
-- Validation: tên/sđt/địa chỉ bắt buộc, SĐT đúng định dạng VN (0xxxxxxxxx)
-- Order summary sidebar: list items, tổng tiền, miễn phí ship
-- Phương thức thanh toán: COD only (Thanh toán khi nhận hàng)
-- Click "Đặt hàng" → modal "Đặt hàng thành công" hiện ra với mã đơn
-
-### Mã đơn hàng tự sinh
-Format: `YK-YYMMDD-XXXX` (ví dụ: `YK-260517-3829`)
-
-### Đơn hàng lưu ở đâu?
-Hiện đang lưu vào `localStorage.Yokool_orders_v1`. Mở Console (F12) gõ:
-```javascript
-JSON.parse(localStorage.getItem('Yokool_orders_v1'))
-```
-
-## ⚠️ Quan trọng: cần tích hợp backend để nhận đơn thật
-
-Hiện tại đơn hàng **chỉ lưu trên máy khách hàng** (localStorage trong browser của họ). Để Jay nhận được đơn, cần kết nối backend. 3 lựa chọn từ dễ đến chuyên nghiệp:
-
-### Cách 1: Formspree (khuyến nghị cho mới bắt đầu)
-1. Lên https://formspree.io → đăng ký free (50 đơn/tháng)
-2. Tạo form, lấy URL endpoint kiểu `https://formspree.io/f/abc123`
-3. Mở `script.js`, tìm comment `TODO Jay: integrate real backend here`
-4. Thay bằng:
-```javascript
-fetch('https://formspree.io/f/abc123', {
-  method: 'POST',
-  body: JSON.stringify(order),
-  headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
-}).catch(err => console.error('Order send failed:', err));
-```
-5. Mỗi đơn sẽ vào email của Jay
-
-### Cách 2: EmailJS
-Tương tự nhưng dùng client-side gửi qua Gmail/Outlook. Free 200 đơn/tháng. Setup phức tạp hơn Formspree một chút.
-
-### Cách 3: Cloudflare Worker (chuyên nghiệp nhất, miễn phí trên free tier)
-Vì site đã host trên Cloudflare Pages, Jay có thể tạo Worker để nhận đơn, lưu vào D1 database hoặc gửi email/Telegram. Setup phức tạp nhất nhưng scale tốt nhất, không phụ thuộc bên thứ 3.
-
-## Đổi giá sản phẩm
-
-Mở từng file `products/*.html`, tìm `data-price="..."` và `price-current">...</span>`. Sửa cả 2 chỗ trong cùng file. Có 4 button có data-price ở mỗi trang (Mua ngay + Thêm vào giỏ + related products ở cuối) — sửa tất.
-
-## Cấu trúc menu
+Tất cả file bạn cần thêm vào repo **`Yokoolwebnew`**:
 
 ```
-Trang chủ
-Sản phẩm  ▾ (hover/tap)
-  ├─ Sạc dự phòng ›
-  │     └─ JP395
-  ├─ Củ sạc ›
-  │     └─ RC502
-  └─ Ổ điện du lịch ›
-        ├─ SL207
-        └─ OL212
-Tin tức
-Liên hệ
+Yokoolwebnew/  (root của repo)
+├── functions/                       ← TẠO MỚI (folder)
+│   ├── _lib/
+│   │   └── cloudcms.ts             ← Helper module
+│   ├── news/
+│   │   └── [slug].ts               ← Trang chi tiết bài viết
+│   ├── news.ts                     ← Trang list bài viết
+│   └── sitemap.xml.ts              ← Sitemap động
+├── news-detail.css                  ← TẠO MỚI (CSS cho blog)
+└── _redirects                       ← TẠO MỚI hoặc append
 ```
 
-Trên desktop: hover để mở dropdown. Trên mobile: tap để toggle (accordion).
+## Hướng dẫn upload từng file lên GitHub
 
-## Cách deploy lên Cloudflare Pages
+### Bước 1: Vào repo Yokoolwebnew
 
-### Cách 1: Upload qua GitHub (đã làm rồi, chỉ cần update repo)
+URL: `https://github.com/vuvantruong1102-lang/Yokoolwebnew`
 
-1. Vào repo GitHub `vuvantruong1102-lang/Yokool-web`
-2. **Xoá tất cả file cũ** trong repo (chọn từng file → Delete)
-3. Upload toàn bộ nội dung **bên trong** thư mục `Yokool/` này lên repo (KHÔNG upload thư mục `Yokool/` mà upload các file/folder bên trong nó)
-4. Cloudflare Pages sẽ tự động deploy lại trong 30-60 giây
+### Bước 2: Upload các file functions
 
-**LƯU Ý**: Khi upload phải đảm bảo file `index.html` nằm ở root của repo, không phải trong subfolder `Yokool/index.html`.
+GitHub web không tạo được nested folder rỗng → tạo folder bằng cách upload file vào path đúng.
 
-### Cách 2: Drag & drop trực tiếp lên Cloudflare Pages
+**File 1**: `functions/_lib/cloudcms.ts`
+- Click **Add file** → **Create new file** (KHÔNG dùng Upload files cho file đầu tiên)
+- Tên file: gõ `functions/_lib/cloudcms.ts` (GitHub tự tạo folder)
+- Paste nội dung file `cloudcms.ts`
+- Commit changes
 
-1. Vào Cloudflare dashboard → Pages → project `Yokool-web`
-2. Click "Create deployment" → "Upload assets"
-3. Kéo cả 4 thứ: `index.html`, `styles.css`, `script.js`, thư mục `images/`, thư mục `products/`
-4. Click "Deploy site"
+**File 2**: `functions/news/[slug].ts`
+- Add file → Create new file
+- Tên file: `functions/news/[slug].ts`
+- Paste nội dung file `[slug].ts`
+- Commit
 
-## Test local trước khi deploy
+**File 3**: `functions/news.ts`
+- Vào folder `functions/` → Add file → Create new file
+- Tên file: `news.ts`
+- Paste nội dung
+- Commit
 
-1. Giải nén file zip (đừng mở trực tiếp từ trong zip)
-2. Vào thư mục `Yokool/`
-3. Double-click `index.html`
-4. Browser sẽ mở và hiển thị website
+**File 4**: `functions/sitemap.xml.ts`
+- Vào folder `functions/` → Add file → Create new file
+- Tên file: `sitemap.xml.ts`
+- Paste nội dung
+- Commit
 
-Nếu test trang sản phẩm: vào `products/` → double-click bất kỳ file `.html` nào.
+### Bước 3: Upload file CSS và _redirects ở root
 
-## Tuỳ chỉnh
+**File 5**: `news-detail.css` (root level)
+- Vào root repo → Add file → Upload files
+- Kéo file `news-detail.css` vào
+- Commit
 
-### Đổi link Shopee
+**File 6**: `_redirects`
+- Vào root repo
+- Nếu đã có file `_redirects`: edit thêm dòng `/news/:slug   /news/:slug.html   200`
+- Nếu chưa có: Add file → Create → tên `_redirects` → paste nội dung
+- Commit
 
-Search & replace `https://shopee.vn/tamayokoofficial` trong tất cả file `.html` thành link Shopee thật của bạn.
+### Bước 4: XOÁ file `news.html` cũ
 
-### Đổi thông tin liên hệ
+File `news.html` cũ chỉ là placeholder. Bây giờ function `functions/news.ts` sẽ tự render `/news.html` động.
 
-Trong `index.html`, tìm section `<section class="contact-section">` và sửa:
-- Số hotline: `0971 222 822`
-- Zalo: `zalo.me/0971222822`
-- Email: `contact@Yokool.com`
+- Vào file `news.html` ở root → click icon **3 chấm** → Delete file
+- Commit
 
-### Đổi màu thương hiệu
+> Nếu không xoá, Pages Functions vẫn ưu tiên function (vì /news không có .html). Nhưng nếu user vào /news.html với .html, file static cũ sẽ được serve. Để chắc nhất là xoá file cũ.
 
-Trong `styles.css`, sửa biến CSS ở đầu file:
+### Bước 5: Tương tự cho `sitemap.xml` cũ
 
-```css
-:root {
-  --brand: #DC143B;         /* màu chính */
-  --brand-hover: #B30E2F;   /* màu hover (đậm hơn) */
-}
-```
+Bạn đã có file `sitemap.xml` tĩnh. Function mới sẽ override → xoá file cũ để tránh confuse.
 
-### Thay ảnh placeholder bằng ảnh thật
+## Set Environment Variable trong Cloudflare Pages
 
-Tất cả ảnh hiện tại là JPG placeholder do mình render từ thiết kế geometric. Để thay bằng ảnh AI hoặc ảnh chụp thật:
+Sau khi push code, function cần biết URL của CloudCMS API:
 
-**Cách thay (đơn giản nhất)**:
-1. Đặt ảnh của bạn với chính xác tên file cũ:
-   - `images/product-sl207.jpg` — sản phẩm SL207
-   - `images/product-ol212.jpg` — sản phẩm OL212
-   - `images/product-jp395.jpg` — sản phẩm JP395
-   - `images/product-rc502.jpg` — sản phẩm RC502
-   - `images/banner-1.jpg`, `banner-2.jpg`, `banner-3.jpg` — 3 banner hero
-2. Upload đè lên file cũ trên GitHub (cùng tên = tự thay)
-3. Cloudflare tự build lại trong 30-60 giây
+1. Cloudflare Dashboard → **Workers & Pages** → click vào project **Yokoolwebnew**
+2. Tab **Settings** → mục **Variables and Secrets** (hoặc **Environment variables**)
+3. Click **Add variable**
+4. Điền:
+   - **Variable name**: `CLOUDCMS_API`
+   - **Value**: URL Worker của bạn, ví dụ `https://cloudcms-api.vuvantruong1102.workers.dev`
+   - (KHÔNG có `/api` ở cuối, KHÔNG có `/` cuối)
+5. Apply cho **Production** environment
+6. Save
 
-**Khuyến nghị kích thước**:
-- Banner: **1600×600 px** (tỉ lệ 16:6, ảnh ngang). Nội dung quan trọng nên ở giữa-phải vì text overlay nằm bên trái.
-- Sản phẩm: **800×800 px** (vuông). Nền trắng hoặc trong suốt sẽ hợp với theme nhất.
-- Định dạng: JPG (file nhỏ, phù hợp ảnh chụp) hoặc PNG (nếu cần nền trong suốt). Nếu dùng PNG, đổi đuôi file thành `.png` rồi sửa HTML.
+> Nếu không set env var này, function sẽ fallback dùng URL hardcoded trong `cloudcms.ts` — nhưng bạn nên set để dễ thay đổi sau.
 
-**Lưu ý ảnh OL212.jpg Jay đã có**: nền đen của ảnh đó sẽ tương phản mạnh với theme trắng. Có thể:
-- Giữ nguyên — sẽ nổi bật, hiện đại
-- Hoặc dùng AI/Photoshop xoá nền đen → còn lại sản phẩm đặt trên nền trắng/trong suốt → hài hoà hơn với theme
+## Trigger redeploy
 
-## Tính năng đã có
+Sau khi commit hết file, Cloudflare Pages **tự build lại**. Vào tab **Deployments** → đợi build xong (2-3 phút).
 
-- ✅ Hero carousel 3 slide tự xoay 6 giây, có nút prev/next, dots
-- ✅ Carousel hỗ trợ vuốt trên mobile, mũi tên bàn phím
-- ✅ Header dính khi cuộn, blur background
-- ✅ Mobile menu (hamburger) tự thu khi click link
-- ✅ Scroll reveal — phần tử mờ rồi hiện khi cuộn tới
-- ✅ Smooth scroll khi click anchor link (#contact)
-- ✅ Hoàn toàn responsive — đẹp trên mobile, tablet, desktop
-- ✅ Tối ưu cho diacritic tiếng Việt (font Be Vietnam Pro)
-- ✅ Nút "Mua tại Shopee" ở mọi nơi cần (header, hero, CTA cuối, related products)
-- ✅ Không có form thanh toán online — chỉ link Shopee + form tư vấn
+## Test
 
-## Tính năng chưa có (có thể thêm sau)
+### 1. Trang list bài viết
+Mở: `https://yokool.vn/news.html` (hoặc `/news`)
+→ Phải thấy giao diện trang Tin tức với grid bài viết
+→ Nếu CMS chưa có bài → "Chưa có bài viết nào"
 
-- Form gửi yêu cầu tư vấn (cần backend hoặc dịch vụ như Formspree)
-- Tích hợp Google Analytics
-- Sitemap.xml + robots.txt cho SEO
-- Open Graph image cho khi share Facebook/Zalo
-- Trang blog/tin tức
+### 2. Test bằng cách tạo 1 bài viết
+- Vào CloudCMS admin → tạo 1 bài viết mới
+- Điền title, content, focus keyword, meta description
+- Upload ảnh đại diện
+- **Xuất bản** (status published)
+- Note lại slug (URL phần `/blog/...`)
 
-## Câu hỏi thường gặp
+### 3. Test bài viết chi tiết
+Mở: `https://yokool.vn/news/<slug>.html`
+→ Phải thấy trang bài viết render đầy đủ
+→ View source (Ctrl+U) → meta tags phải có đầy đủ (title, description, og:image, JSON-LD)
 
-**Q: Tại sao toàn bộ ảnh là JPG?**
-A: JPG nén tốt cho ảnh chụp sản phẩm thật, file nhỏ, mọi browser đều hiển thị. Nếu cần nền trong suốt (logo, icon) thì dùng PNG, đổi đuôi `.jpg` → `.png` trong HTML.
+### 4. Test sitemap
+Mở: `https://yokool.vn/sitemap.xml`
+→ Phải thấy XML với cả static pages + bài viết blog
 
-**Q: Tôi muốn dùng WebP cho ảnh để load nhanh hơn?**
-A: Hoàn toàn có thể. Đặt file `.webp` vào `images/`, sửa đuôi trong HTML. Cloudflare hỗ trợ WebP tốt và tự nén/optimize.
+### 5. Submit lên Google Search Console
+- Vào https://search.google.com/search-console
+- Property `yokool.vn` → Sitemaps → Add: `https://yokool.vn/sitemap.xml`
 
-**Q: Sao không dùng React/Next.js?**
-A: Site tĩnh đơn giản, vài trang sản phẩm. HTML thuần load nhanh hơn, dễ host miễn phí, không phải build. Khi nào cần dynamic (đặt hàng online, blog có quản trị) sẽ chuyển.
+## Workflow viết bài mới
 
-**Q: Cloudflare Pages có giới hạn gì?**
-A: Free tier: unlimited bandwidth, 500 builds/tháng, 100 deploys/ngày. Quá đủ cho website thương mại nhỏ.
+1. Vào CloudCMS admin (`https://cloudcms-admin.pages.dev`) → đăng nhập
+2. Click **Bài viết mới**
+3. Soạn bài với editor (heading, ảnh, link…)
+4. Điền:
+   - **Focus keyword**: từ khóa chính bạn muốn rank
+   - **Meta description**: 140-160 ký tự, có chứa từ khóa
+   - **Ảnh đại diện**: upload ảnh
+5. Xem điểm SEO panel bên phải, fix các warning
+6. Click **Xuất bản**
 
-**Q: Nếu Cloudflare Pages chậm propagate?**
-A: Đợi 30-60 giây, mở incognito để bypass cache, hoặc vào Cloudflare dashboard purge cache.
+→ Sau 5 phút (do edge cache TTL), bài viết sẽ hiện tại `https://yokool.vn/news/<slug>.html`
 
----
+> Nếu muốn thấy ngay, vào Cloudflare Dashboard → Caching → Purge Everything cho yokool.vn
 
-© 2026 Yokool — Made in Vietnam · v2.0 light theme · Powered by Cloudflare Pages
+## Troubleshooting
+
+### Bài viết không hiển thị
+- Check status có phải `published` không
+- Check `https://cloudcms-api.<your-subdomain>.workers.dev/api/public/posts/<slug>` trả gì
+- Check env var `CLOUDCMS_API` đã set đúng chưa
+
+### CSS bị broken
+- Đảm bảo `news-detail.css` đã upload đúng ở **root** repo (không phải trong folder)
+- Hard refresh browser (Ctrl+Shift+R)
+
+### Build fail trên Cloudflare
+- Vào tab **Deployments** → xem **Build log**
+- Lỗi TypeScript: Cloudflare Pages tự compile TS, không cần build step
+- Nếu fail vì syntax: screenshot gửi mình
+
+### URL có .html / không có .html
+- Function `[slug].ts` chấp nhận cả `/news/abc` và `/news/abc.html`
+- Tốt nhất luôn dùng `/news/<slug>.html` để consistent với site cũ
+
+## Roadmap tiếp theo
+
+- [ ] Bổ sung **related posts** ở cuối bài (cùng category)
+- [ ] Thêm **breadcrumb JSON-LD** cho SEO tốt hơn
+- [ ] Cache control nâng cao với Workers KV
+- [ ] Webhook từ CMS → tự purge cache khi publish bài mới
+- [ ] Search trong blog (cần thêm endpoint trong CloudCMS)
