@@ -1,33 +1,37 @@
 // ============================================================
 // /functions/news/[slug].ts
-// Trang chi tiết bài viết - SSR, SEO tối ưu
-// URL: /news/<slug> (không cần .html ở cuối)
+// Trang chi tiết bài viết - SSR
+// Bắt URL /news/<slug> và /news/<slug>.html (Pages tự fallback)
 // ============================================================
 
-import { type Env, fetchPostBySlug, buildMetaTags, escapeHtml, formatDateVN } from '../_lib/cloudcms';
+import {
+  type Env, type Post,
+  fetchPostBySlug, renderHead, renderHeader, renderFooter,
+  escapeHtml, formatDateVN, isoDate,
+} from '../_lib/cloudcms';
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   let slug = context.params.slug as string;
   if (!slug) return new Response('Not found', { status: 404 });
-
-  // Cho phép truy cập với hoặc không có .html
   if (slug.endsWith('.html')) slug = slug.slice(0, -5);
 
   const baseUrl = new URL(context.request.url).origin;
 
   try {
     const post = await fetchPostBySlug(context.env, slug);
-    if (!post) return new Response(notFoundHtml(baseUrl), {
-      status: 404,
-      headers: { 'content-type': 'text/html; charset=utf-8' },
-    });
+    if (!post) {
+      // Quan trọng: trả 404 để Pages tự thử file static .html
+      // Nhưng vì function này được gọi nghĩa là không có file static → trả 404 thật
+      return new Response(notFoundHtml(), {
+        status: 404,
+        headers: { 'content-type': 'text/html; charset=utf-8' },
+      });
+    }
 
-    const html = renderPostPage(post, baseUrl);
-    return new Response(html, {
+    return new Response(renderPostPage(post, baseUrl), {
       status: 200,
       headers: {
         'content-type': 'text/html; charset=utf-8',
-        // Cache 5 phút ở edge, 1 phút ở browser
         'cache-control': 'public, max-age=60, s-maxage=300',
       },
     });
@@ -37,134 +41,148 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   }
 };
 
-function renderPostPage(post: any, baseUrl: string): string {
+function renderPostPage(post: Post, baseUrl: string): string {
+  const title = post.meta_title || post.title;
+  const description = post.meta_description || post.excerpt || '';
+  const canonical = post.canonical_url || `${baseUrl}/news/${post.slug}.html`;
+  const robots = [
+    post.robots_index ? 'index' : 'noindex',
+    post.robots_follow ? 'follow' : 'nofollow',
+  ].join(', ');
+
+  // JSON-LD structured data
+  const jsonLd: any = {
+    '@context': 'https://schema.org',
+    '@type': post.schema_type || 'Article',
+    headline: post.title,
+    description: description,
+    datePublished: isoDate(post.published_at),
+    dateModified: isoDate(post.updated_at),
+    publisher: {
+      '@type': 'Organization',
+      name: 'Yokool',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/images/yokool-logo.png`,
+      },
+    },
+    mainEntityOfPage: canonical,
+  };
+  if (post.og_image_url) jsonLd.image = post.og_image_url;
+  if (post.author_name) jsonLd.author = { '@type': 'Person', name: post.author_name };
+
+  const headHtml = renderHead({
+    title: `${title} — Yokool`,
+    description,
+    canonical,
+    ogTitle: post.og_title || title,
+    ogDescription: post.og_description || description,
+    ogImage: post.og_image_url || `${baseUrl}/images/banner-1.jpg`,
+    ogType: post.og_type || 'article',
+    robots,
+    publishedTime: isoDate(post.published_at),
+    modifiedTime: isoDate(post.updated_at),
+    author: post.author_name,
+    keywords: post.meta_keywords || undefined,
+    jsonLd,
+  });
+
   const dateStr = formatDateVN(post.published_at);
-  const tagsHtml = (post.tags ?? [])
-    .map((t: any) => `<span class="post-tag">${escapeHtml(t.name)}</span>`)
-    .join('');
 
   return `<!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  ${buildMetaTags(post, baseUrl)}
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/news-detail.css">
-  <link rel="icon" type="image/png" href="/images/yokool-logo.png">
+${headHtml}
 </head>
 <body>
-  <!-- HEADER (giống index.html) -->
-  <header class="site-header" id="siteHeader">
-    <div class="header-inner">
-      <a href="/" class="logo-link" aria-label="Yokool Trang chủ">
-        <img src="/images/yokool-logo.png" alt="Yokool" class="logo">
-      </a>
-      <nav class="main-nav" id="mainNav">
-        <a href="/">Trang chủ</a>
-        <div class="nav-dropdown">
-          <button class="nav-trigger" aria-haspopup="true">Sản phẩm <span class="nav-arrow">▾</span></button>
-          <div class="nav-menu">
-            <a href="/products/jp395.html">JP395 — Sạc dự phòng</a>
-            <a href="/products/rc502.html">RC502 — Củ sạc</a>
-            <a href="/products/sl207.html">SL207 — Ổ điện du lịch</a>
-            <a href="/products/ol212.html">OL212 — Ổ điện du lịch</a>
-          </div>
-        </div>
-        <a href="/news.html" class="nav-active">Tin tức</a>
-        <a href="/b2b.html">B2B</a>
-        <a href="/lien-he.html">Liên hệ</a>
-      </nav>
-      <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">☰</button>
-    </div>
-  </header>
 
-  <!-- BREADCRUMB -->
-  <nav class="breadcrumb" aria-label="Breadcrumb">
-    <div class="breadcrumb-inner">
-      <a href="/">Trang chủ</a>
-      <span class="breadcrumb-sep">›</span>
+${renderHeader()}
+
+<article class="article">
+  <div class="container">
+
+    <nav class="article-breadcrumb" aria-label="Breadcrumb">
+      <a href="/index.html">Trang chủ</a>
+      <span aria-hidden="true">›</span>
       <a href="/news.html">Tin tức</a>
-      <span class="breadcrumb-sep">›</span>
-      <span class="breadcrumb-current">${escapeHtml(post.title)}</span>
-    </div>
-  </nav>
+      <span aria-hidden="true">›</span>
+      <span>${escapeHtml(post.title)}</span>
+    </nav>
 
-  <!-- ARTICLE -->
-  <main class="post-page">
-    <article class="post-article">
-      <header class="post-header">
-        ${post.category_name ? `<a href="/news.html?category=${encodeURIComponent(post.category_slug)}" class="post-category">${escapeHtml(post.category_name)}</a>` : ''}
-        <h1 class="post-title">${escapeHtml(post.title)}</h1>
-        ${post.excerpt ? `<p class="post-excerpt">${escapeHtml(post.excerpt)}</p>` : ''}
-        <div class="post-meta">
-          ${post.author_name ? `<span class="post-author">Bởi <strong>${escapeHtml(post.author_name)}</strong></span>` : ''}
-          ${dateStr ? `<time class="post-date" datetime="${new Date(post.published_at).toISOString()}">${dateStr}</time>` : ''}
-          ${post.reading_time ? `<span class="post-reading">${post.reading_time} phút đọc</span>` : ''}
-        </div>
-      </header>
-
-      ${post.og_image_url ? `
-        <figure class="post-hero">
-          <img src="${escapeHtml(post.og_image_url)}" alt="${escapeHtml(post.featured_image_alt ?? post.title)}" loading="eager">
-          ${post.featured_image_alt ? `<figcaption>${escapeHtml(post.featured_image_alt)}</figcaption>` : ''}
-        </figure>
-      ` : ''}
-
-      <div class="post-content prose">
-        ${post.content_html ?? ''}
+    <header class="article-header">
+      ${post.category_name ? `<span class="article-category">${escapeHtml(post.category_name)}</span>` : ''}
+      <h1 class="article-title">${escapeHtml(post.title)}</h1>
+      <div class="article-meta">
+        ${dateStr ? `<time datetime="${isoDate(post.published_at)}">${escapeHtml(dateStr)}</time>` : ''}
+        ${dateStr && post.reading_time ? `<span aria-hidden="true">·</span>` : ''}
+        ${post.reading_time ? `<span>${post.reading_time} phút đọc</span>` : ''}
+        ${post.author_name ? `<span aria-hidden="true">·</span><span>${escapeHtml(post.author_name)}</span>` : ''}
       </div>
+    </header>
 
-      ${tagsHtml ? `<div class="post-tags">${tagsHtml}</div>` : ''}
+  </div>
 
-      <!-- Share buttons -->
-      <div class="post-share">
-        <span class="share-label">Chia sẻ:</span>
-        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(baseUrl + '/news/' + post.slug + '.html')}" target="_blank" rel="noopener" aria-label="Chia sẻ Facebook">Facebook</a>
-        <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(baseUrl + '/news/' + post.slug + '.html')}&text=${encodeURIComponent(post.title)}" target="_blank" rel="noopener" aria-label="Chia sẻ X/Twitter">X</a>
-        <a href="https://zalo.me/share/url?u=${encodeURIComponent(baseUrl + '/news/' + post.slug + '.html')}" target="_blank" rel="noopener" aria-label="Chia sẻ Zalo">Zalo</a>
+  ${post.og_image_url ? `
+  <div class="article-cover">
+    <img src="${escapeHtml(post.og_image_url)}" alt="${escapeHtml(post.featured_image_alt || post.title)}" loading="eager">
+  </div>` : ''}
+
+  <div class="container">
+    <div class="article-body">
+      ${post.excerpt ? `<p class="article-lede">${escapeHtml(post.excerpt)}</p>` : ''}
+
+      ${post.content_html ?? ''}
+
+      <div class="article-cta">
+        <span class="article-cta-label">Khám phá thêm</span>
+        <p class="article-cta-text">Xem bộ sưu tập sản phẩm Yokool — sạc thông minh, nhẹ gánh hành trình.</p>
+        <a href="/index.html#products" class="cta-button">Xem sản phẩm <span class="cta-arrow">→</span></a>
       </div>
-    </article>
-
-    <!-- CTA mua sản phẩm -->
-    <aside class="post-cta-box">
-      <h3>Khám phá sản phẩm Yokool</h3>
-      <p>Sạc thông minh, nhẹ gánh hành trình. Giải pháp sạc cao cấp cho người năng động.</p>
-      <a href="/" class="cta-button">Xem sản phẩm <span class="cta-arrow">→</span></a>
-    </aside>
-  </main>
-
-  <!-- FOOTER (giống index.html, rút gọn ở đây) -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <p>© 2026 Yokool — Stay powered. Stay cool. · <a href="/lien-he.html">Liên hệ</a> · <a href="/b2b.html">B2B</a></p>
     </div>
-  </footer>
+  </div>
 
-  <script src="/script.js"></script>
+</article>
+
+${renderFooter()}
+
 </body>
 </html>`;
 }
 
-function notFoundHtml(baseUrl: string): string {
+function notFoundHtml(): string {
   return `<!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Không tìm thấy bài viết | Yokool</title>
-  <meta name="robots" content="noindex">
-  <link rel="stylesheet" href="/styles.css">
+${renderHead({
+  title: 'Không tìm thấy bài viết — Yokool',
+  description: 'Bài viết bạn tìm có thể đã bị xoá hoặc URL không đúng.',
+  canonical: '',
+  robots: 'noindex, nofollow',
+})}
 </head>
 <body>
-  <main style="padding: 80px 20px; text-align: center;">
-    <h1 style="font-size: 32px; margin-bottom: 16px;">Không tìm thấy bài viết</h1>
-    <p style="color: #666; margin-bottom: 24px;">Bài viết bạn tìm có thể đã bị xoá hoặc URL không đúng.</p>
-    <a href="/news.html" style="color: #DC143B; text-decoration: underline;">← Quay lại trang tin tức</a>
-  </main>
+
+${renderHeader()}
+
+<section class="news-empty">
+  <div class="container">
+    <div class="news-empty-inner">
+      <div class="news-empty-mark">✦</div>
+      <h1 class="news-empty-title">Không tìm thấy bài viết</h1>
+      <p class="news-empty-description">Bài viết bạn đang tìm có thể đã bị xoá hoặc URL không đúng. Quay lại trang Tin tức để xem các bài khác nhé.</p>
+      <div class="news-empty-actions">
+        <a href="/news.html" class="cta-button">
+          Về trang Tin tức
+          <span class="cta-arrow">→</span>
+        </a>
+        <a href="/index.html" class="cta-button cta-button--ghost">Về trang chủ</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+${renderFooter()}
+
 </body>
 </html>`;
 }
