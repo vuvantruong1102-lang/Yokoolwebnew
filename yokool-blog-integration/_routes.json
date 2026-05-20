@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "include": [
+    "/news",
+    "/news.html",
+    "/news/*",
+    "/sitemap.xml"
+  ],
+  "exclude": [
+    "/news/rc502-gan-65w-mini.html",
+    "/news/rc502-sac-laptop-vs-truyen-thong.html",
+    "/news/rc502-tinh-hop-day-thiet-ke.html",
+    "/news/jp395-magsafe-10000mah.html",
+    "/news/jp395-chon-pin-du-phong.html",
+    "/news/jp395-magsafe-iphone.html",
+    "/news/ol212-o-dien-du-lich-180-quoc-gia.html",
+    "/news/sl207-pd35w-5-thiet-bi.html",
+    "/news/so-sanh-ol212-vs-sl207.html",
+    "/news/cong-nghe-gan-la-gi.html"
+  ]
+}
