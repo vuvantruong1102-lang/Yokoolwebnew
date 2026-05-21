@@ -69,6 +69,32 @@ export async function fetchPostBySlug(env: Env, slug: string): Promise<Post | nu
   return resp.json();
 }
 
+// Fetch related posts - cùng category, exclude current post, take 3
+export async function fetchRelatedPosts(
+  env: Env,
+  currentPostId: string,
+  categorySlug: string | null | undefined,
+  limit: number = 3
+): Promise<Post[]> {
+  try {
+    // Strategy: lấy nhiều bài cùng category, filter bỏ bài hiện tại
+    const params = new URLSearchParams();
+    params.set('limit', String(limit + 1)); // +1 để có dự phòng nếu bài hiện tại trong list
+    if (categorySlug) params.set('category', categorySlug);
+
+    const url = `${apiBase(env)}/api/public/posts?${params}`;
+    const resp = await fetch(url, { cf: { cacheTtl: 300, cacheEverything: true } });
+    if (!resp.ok) return [];
+    const data = await resp.json() as { items: Post[] };
+    return data.items
+      .filter((p) => p.id !== currentPostId)
+      .slice(0, limit);
+  } catch (err) {
+    console.error('fetchRelatedPosts error:', err);
+    return [];
+  }
+}
+
 export function escapeHtml(s: string | null | undefined): string {
   return String(s ?? '').replace(/[&<>"']/g, (c) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -148,6 +174,7 @@ export function renderHead(opts: {
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/blog-enhance.css">
   ${opts.jsonLd ? `<script type="application/ld+json">${JSON.stringify(opts.jsonLd)}</script>` : ''}
   `.trim();
 }
@@ -343,5 +370,6 @@ export function renderFooter(): string {
   </aside>
 
   <script src="/script.js"></script>
+  <script src="/blog-enhance.js" defer></script>
   `.trim();
 }
