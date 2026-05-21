@@ -47,7 +47,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 function renderPostPage(post: Post, related: Post[], baseUrl: string): string {
   const title = post.meta_title || post.title;
   const description = post.meta_description || post.excerpt || '';
-  const canonical = post.canonical_url || `${baseUrl}/news/${post.slug}.html`;
+  const canonical = post.canonical_url || `${baseUrl}/news/${post.slug}`;
   const robots = [
     post.robots_index ? 'index' : 'noindex',
     post.robots_follow ? 'follow' : 'nofollow',
@@ -74,6 +74,17 @@ function renderPostPage(post: Post, related: Post[], baseUrl: string): string {
   if (post.og_image_url) jsonLd.image = post.og_image_url;
   if (post.author_name) jsonLd.author = { '@type': 'Person', name: post.author_name };
 
+  // ============================================================
+  // FAQ Schema - parse từ content_html nếu có FAQ block
+  // SEO: tạo cơ hội xuất hiện Rich Snippet FAQ trên Google
+  // ============================================================
+  const faqSchema = extractFaqSchema(post.content_html || '');
+
+  // Inject FAQ schema vào head (script JSON-LD thứ 2)
+  const faqJsonLdScript = faqSchema
+    ? `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`
+    : '';
+
   const headHtml = renderHead({
     title: `${title} — Yokool`,
     description,
@@ -96,6 +107,7 @@ function renderPostPage(post: Post, related: Post[], baseUrl: string): string {
 <html lang="vi">
 <head>
 ${headHtml}
+${faqJsonLdScript}
 </head>
 <body>
 
@@ -107,14 +119,14 @@ ${renderHeader()}
     <nav class="article-breadcrumb" aria-label="Breadcrumb">
       <a href="/index.html">Trang chủ</a>
       <span aria-hidden="true">›</span>
-      <a href="/news.html">Tin tức</a>
+      <a href="/news">Tin tức</a>
       <span aria-hidden="true">›</span>
       <span>${escapeHtml(post.title)}</span>
     </nav>
 
-    <header class="article-header">
+    <header class="article-header" data-title-align="${escapeHtml((post as any).title_align || 'left')}">
       ${post.category_name ? `<span class="article-category">${escapeHtml(post.category_name)}</span>` : ''}
-      <h1 class="article-title">${escapeHtml(post.title)}</h1>
+      <h1 class="article-title" style="text-align: ${escapeHtml((post as any).title_align || 'left')}">${escapeHtml(post.title)}</h1>
       <div class="article-meta">
         ${dateStr ? `<time datetime="${isoDate(post.published_at)}">${escapeHtml(dateStr)}</time>` : ''}
         ${dateStr && post.reading_time ? `<span aria-hidden="true">·</span>` : ''}
@@ -176,7 +188,7 @@ ${renderHeader()}
       <h1 class="news-empty-title">Không tìm thấy bài viết</h1>
       <p class="news-empty-description">Bài viết bạn đang tìm có thể đã bị xoá hoặc URL không đúng. Quay lại trang Tin tức để xem các bài khác nhé.</p>
       <div class="news-empty-actions">
-        <a href="/news.html" class="cta-button">
+        <a href="/news" class="cta-button">
           Về trang Tin tức
           <span class="cta-arrow">→</span>
         </a>
@@ -199,7 +211,7 @@ function renderRelatedSection(related: Post[]): string {
   if (!related || related.length === 0) return '';
 
   const cards = related.map((p) => `
-    <a href="/news/${escapeHtml(p.slug)}.html" class="related-card">
+    <a href="/news/${escapeHtml(p.slug)}" class="related-card">
       <div class="related-card-thumb">
         ${p.og_image_url
           ? `<img src="${escapeHtml(p.og_image_url)}" alt="" loading="lazy">`
@@ -219,4 +231,70 @@ function renderRelatedSection(related: Post[]): string {
       ${cards}
     </div>
   </section>`;
+}
+
+// ============================================================
+// FAQ Schema Extractor
+// Parse FAQ blocks từ content_html của bài viết
+// HTML structure (từ Tiptap FAQ extension):
+//   <div class="faq-section" data-faq="true">
+//     <details class="faq-item">
+//       <summary class="faq-question">Question?</summary>
+//       <div class="faq-answer"><p>Answer...</p></div>
+//     </details>
+//     ...
+//   </div>
+// ============================================================
+function extractFaqSchema(html: string): any | null {
+  if (!html || !html.includes('class="faq-item"')) return null;
+
+  const faqs: Array<{ question: string; answer: string }> = [];
+
+  // Regex parse từng faq-item
+  const itemPattern = /<details[^>]*class="[^"]*faq-item[^"]*"[^>]*>([\s\S]*?)<\/details>/gi;
+  let match;
+  while ((match = itemPattern.exec(html)) !== null) {
+    const itemHtml = match[1];
+
+    // Extract question (summary)
+    const qMatch = /<summary[^>]*class="[^"]*faq-question[^"]*"[^>]*>([\s\S]*?)<\/summary>/i.exec(itemHtml);
+    // Extract answer (div)
+    const aMatch = /<div[^>]*class="[^"]*faq-answer[^"]*"[^>]*>([\s\S]*?)<\/div>/i.exec(itemHtml);
+
+    if (qMatch && aMatch) {
+      const question = stripTags(qMatch[1]).trim();
+      const answer = stripTags(aMatch[1]).trim();
+      if (question && answer) {
+        faqs.push({ question, answer });
+      }
+    }
+  }
+
+  if (faqs.length === 0) return null;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.answer,
+      },
+    })),
+  };
+}
+
+function stripTags(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
 }
