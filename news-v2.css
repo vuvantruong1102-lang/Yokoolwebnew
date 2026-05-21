@@ -512,3 +512,201 @@
 .article-content span[style*="color"] {
   /* Inherit từ inline style, không override */
 }
+
+/* ============================================================
+   RICH CONTENT FROM CMS EDITOR
+   Style cho HTML xuất từ Tiptap editor trong bài viết
+   ============================================================ */
+
+/* Blockquote — style giống .article-blockquote nhưng cho thẻ <blockquote> thuần */
+.article-body blockquote {
+  padding: 16px 24px;
+  margin: 24px 0;
+  background: #fafafa;
+  border-left: 4px solid #DC143B;
+  font-style: italic;
+  color: #4b5563;
+  border-radius: 4px;
+}
+
+.article-body blockquote p {
+  margin: 0;
+}
+
+.article-body blockquote p + p {
+  margin-top: 12px;
+}
+
+/* Callout boxes từ Tiptap CalloutExtension */
+.article-body .callout {
+  padding: 16px 20px;
+  margin: 24px 0;
+  border-left: 4px solid;
+  border-radius: 6px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.article-body .callout p {
+  margin: 0;
+}
+
+.article-body .callout p + p {
+  margin-top: 8px;
+}
+
+.article-body .callout-info {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #1e3a8a;
+}
+
+.article-body .callout-warning {
+  background: #fffbeb;
+  border-color: #d97706;
+  color: #78350f;
+}
+
+.article-body .callout-success {
+  background: #f0fdf4;
+  border-color: #16a34a;
+  color: #14532d;
+}
+
+.article-body .callout-tip {
+  background: #faf5ff;
+  border-color: #9333ea;
+  color: #581c87;
+}
+
+/* Tables từ Tiptap Table extension */
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 15px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.article-body th,
+.article-body td {
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.article-body th {
+  background: #f9fafb;
+  font-weight: 600;
+  color: #111827;
+}
+
+.article-body tr:nth-child(even) td {
+  background: #fafafa;
+}
+
+/* YouTube embed responsive */
+.article-body .youtube-embed,
+.article-body iframe[src*="youtube"] {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 0;
+  border-radius: 8px;
+  margin: 24px 0;
+  display: block;
+}
+
+/* Image figure with resize/align */
+.article-body figure[data-resizable-image] {
+  margin: 24px auto;
+  max-width: 100%;
+}
+
+.article-body figure[data-resizable-image][data-align="left"] {
+  float: left;
+  margin-right: 24px;
+  margin-bottom: 16px;
+}
+
+.article-body figure[data-resizable-image][data-align="right"] {
+  float: right;
+  margin-left: 24px;
+  margin-bottom: 16px;
+}
+
+.article-body figure[data-resizable-image][data-align="center"] {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  clear: both;
+}
+
+.article-body figure[data-resizable-image] img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.article-body figure figcaption {
+  font-size: 13px;
+  color: #6b7280;
+  text-align: center;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Text color từ Tiptap Color extension — inline style đã đủ, không cần override */
+
+/* Code inline */
+.article-body code {
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.9em;
+  color: #DC143B;
+}
+
+/* Code block */
+.article-body pre {
+  background: #1a1a1a;
+  color: #f3f4f6;
+  padding: 16px 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 24px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.article-body pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+/* Lists */
+.article-body ul,
+.article-body ol {
+  margin: 16px 0;
+  padding-left: 28px;
+}
+
+.article-body li {
+  margin: 4px 0;
+}
+
+/* Mobile clear floats */
+@media (max-width: 640px) {
+  .article-body figure[data-resizable-image][data-align="left"],
+  .article-body figure[data-resizable-image][data-align="right"] {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+}
