@@ -751,54 +751,33 @@
 
 /* ============================================================
    FIX: Inline color từ Tiptap Color extension
-   styles.css của Yokool có `.article-body p { color: var(--text-secondary) }`
-   với specificity (0,1,1). Inline style="color" specificity là (1,0,0,0) - cao hơn.
-   Nhưng đôi khi cascade order ưu tiên, ta cần selector cụ thể hơn.
+   
+   Nguyên nhân: Tiptap lưu màu dưới dạng:
+     <span style="color: red"><strong><em>text</em></strong></span>
+   
+   Nhưng styles.css của Yokool có:
+     .article-body strong { color: var(--text-primary); }
+     .article-body p strong { color: var(--text-primary); }
+   
+   CSS đó áp dụng cho <strong> (con của span) → override màu của parent.
+   
+   Fix: bắt <strong>, <em>, <b>, <i> NẰM TRONG span có inline color
+        phải kế thừa màu từ span parent (dùng color: inherit).
    ============================================================ */
 
-/* Trick: dùng selector có style attribute → tăng specificity
-   `.article-body span[style]` có specificity (0,2,1) > parent p (0,1,1) */
-.article-body p span[style],
-.article-body h1 span[style],
-.article-body h2 span[style],
-.article-body h3 span[style],
-.article-body h4 span[style],
-.article-body h5 span[style],
-.article-body h6 span[style],
-.article-body li span[style],
-.article-body blockquote span[style],
-.article-body td span[style],
-.article-body th span[style] {
-  /* Inline style sẽ tự apply (color, font-size, background...)
-     Block này chỉ để bump specificity, không override gì */
+.article-body span[style*="color"] strong,
+.article-body span[style*="color"] em,
+.article-body span[style*="color"] b,
+.article-body span[style*="color"] i,
+.article-body span[style*="color"] u,
+.article-body span[style*="color"] s,
+.article-body span[style*="color"] mark,
+.article-body span[style*="color"] code {
   color: inherit;
 }
 
-/* Override specifically khi span có inline color attribute */
-.article-body [style*="color:"] {
-  color: revert;
-}
-
-/* ============================================================
-   TITLE ALIGN - căn lề tiêu đề bài viết
-   Render từ inline style="text-align: ..." trong template
-   ============================================================ */
-
-.article-header .article-title {
-  text-align: inherit;
-}
-
-.article-header[data-title-align="center"] .article-meta,
-.article-header[data-title-align="center"] .article-category {
-  text-align: center;
-}
-
-.article-header[data-title-align="right"] .article-meta,
-.article-header[data-title-align="right"] .article-category {
-  text-align: right;
-}
-
-.article-header[data-title-align="center"] .article-category,
-.article-header[data-title-align="right"] .article-category {
-  display: inline-block;
+/* Trường hợp nested phức tạp: span > strong > em (như VD bạn gặp) */
+.article-body span[style*="color"] *,
+.article-body span[style*="color"] * * {
+  color: inherit;
 }
