@@ -232,7 +232,7 @@ export function renderHeader(): string {
           </div>
         </div>
 
-        <a href="/news.html" class="nav-link">Tin tức</a>
+        <a href="/news" class="nav-link">Tin tức</a>
         <a href="/b2b.html" class="nav-link">Hợp tác B2B</a>
         <a href="/lien-he.html" class="nav-link">Liên hệ</a>
       </nav>
