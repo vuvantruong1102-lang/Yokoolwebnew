@@ -1,67 +1,81 @@
-# CỤM C — Frontend cho Yokoolwebnew
+# CỤM C — Frontend Yokoolwebnew (FIX news.html)
 
-## File trong gói này (4 file)
+## Vấn đề
+
+Bạn đã xóa `news.html` static nhưng chưa upload các Pages Functions để render động → URL `/news.html` fallback về `index.html`.
+
+## Files cần upload (7 files)
 
 ```
-cum-c-frontend/
-├── blog-enhance.css                      ← NEW (đặt ở ROOT repo)
-├── blog-enhance.js                       ← NEW (đặt ở ROOT repo)
-└── functions/
+Yokoolwebnew/
+├── _routes.json                    ← NEW (chỉ định Pages Functions chạy cho URL nào)
+├── blog-enhance.css                ← UPDATE (thêm styles cho /news.html)
+├── blog-enhance.js                 ← UPDATE (đã có)
+└── functions/                      ← Folder mới hoàn toàn
     ├── _lib/
-    │   └── cloudcms.ts                   ← REPLACE
-    └── news/
-        └── [slug].ts                     ← REPLACE
+    │   └── cloudcms.ts             ← Shared helpers
+    ├── news.ts                     ← Trang DANH SÁCH /news.html
+    ├── news/
+    │   └── [slug].ts               ← Trang CHI TIẾT /news/<slug>.html
+    └── sitemap.xml.ts              ← Sitemap động
 ```
 
 ## Cách upload
 
-1. Giải nén `cum-c-frontend.zip` được folder `cum-c-frontend/`
-2. Chọn **TẤT CẢ thứ bên trong**: 2 file `.css`, `.js` và folder `functions/`
-3. Vào https://github.com/vuvantruong1102-lang/Yokoolwebnew
-4. **Add file** → **Upload files** → kéo cả 3 thứ vừa chọn vào
-5. GitHub hiện danh sách 4 file thay đổi:
-   - `blog-enhance.css` (mới ở root)
-   - `blog-enhance.js` (mới ở root)
-   - `functions/_lib/cloudcms.ts` (đè)
-   - `functions/news/[slug].ts` (đè)
-6. Commit: `Frontend v2: TOC, reading progress, lightbox, related posts`
-7. Commit changes
+### Bước 1: Vào repo
+https://github.com/vuvantruong1102-lang/Yokoolwebnew
 
-## Test (sau 2-3 phút build)
+### Bước 2: Add file → Upload files
 
-Mở bất kỳ bài viết CMS nào, vd: `https://yokool.vn/news/<slug>.html`
+Kéo các thứ sau vào (giữ đúng cấu trúc folder):
+- File `_routes.json` (root)
+- File `blog-enhance.css` (đè, root)
+- File `blog-enhance.js` (đè, root)
+- Folder `functions/` (cả folder + nội dung bên trong)
 
-| Tính năng | Cách kiểm tra |
-|---|---|
-| **Reading progress bar** | Cuộn xuống → thanh đỏ ở đỉnh tăng dần |
-| **TOC (mục lục)** | Trên desktop ≥1280px: box "Mục lục" sticky bên phải. Mobile: inline trong bài |
-| **TOC highlight** | Cuộn xuống → item đang xem highlight đỏ |
-| **TOC click** | Click item → scroll mượt đến section |
-| **Image lightbox** | Click ảnh trong bài → mở fullscreen, nhấn ESC để đóng |
-| **Lazy load** | Ảnh dưới fold load khi cuộn tới (kiểm tra Network tab) |
-| **Related posts** | Cuộn xuống cuối bài → grid 3 bài cùng category |
+### Bước 3: Verify danh sách file trên GitHub
 
-## Lưu ý
+Phải thấy 7 file:
+```
+✓ _routes.json
+✓ blog-enhance.css
+✓ blog-enhance.js
+✓ functions/_lib/cloudcms.ts
+✓ functions/news.ts
+✓ functions/news/[slug].ts
+✓ functions/sitemap.xml.ts
+```
 
-### TOC chỉ hiện khi bài đủ dài
-- Bài cần ≥3 heading (h2/h3) thì TOC mới xuất hiện
-- Bài ngắn không có TOC là behavior đúng (không spam UI)
+### Bước 4: Commit
 
-### Related Posts cần data
-- Bài hiện tại cần có category
-- Phải có ≥1 bài khác cùng category đã published
-- Nếu không có → section Related Posts không render (không error)
+Commit message: `Add Pages Functions for /news.html and articles`
 
-### Bài static cũ
-- TOC/Lightbox **không** chạy trên bài static cũ trong folder `/news/<slug>.html` (theo yêu cầu của bạn)
-- Chỉ chạy trên bài render qua function `[slug].ts` (tức bài đã migrate vào CMS)
+### Bước 5: Đợi Pages build (~2 phút)
+
+Vào Cloudflare → Workers & Pages → yokool-vn (hoặc tên project) → Deployments
+Đợi deployment mới có status **Active**.
+
+## Test sau khi deploy
+
+### Test 1: Trang danh sách
+Mở https://yokool.vn/news.html (Ctrl+Shift+R)
+→ Phải thấy danh sách 2 bài viết hiện có (OL212 vs SL207, Quà tặng công nghệ B2B)
+
+### Test 2: Trang chi tiết
+Click vào 1 bài → URL phải là https://yokool.vn/news/ol212-vs-sl207-chon-o-dien-du-lich-nap.html
+→ Phải render đầy đủ nội dung bài viết
+
+### Test 3: Sitemap
+Mở https://yokool.vn/sitemap.xml
+→ Phải thấy danh sách URLs đầy đủ: trang chủ, products/*, news, và các bài viết
 
 ## Troubleshooting
 
-| Lỗi | Nguyên nhân thường gặp | Fix |
-|---|---|---|
-| TOC không hiện | Bài chưa đủ 3 h2/h3 | Thêm heading |
-| TOC che layout | Hard refresh (Ctrl+Shift+R) | Cache CSS cũ |
-| Lightbox không mở | JS chưa load | Check Network tab `/blog-enhance.js` |
-| Related Posts trống | Chưa có bài cùng category | Tạo thêm bài + assign category |
-| Build fail | Lỗi TypeScript trong `[slug].ts` | Check Cloudflare Pages → Build log |
+### Nếu /news.html vẫn về trang chủ
+- Check `_routes.json` đã upload đúng vào root chưa
+- Check Pages deployment đã xong chưa (status Active)
+- Hard refresh (Ctrl+Shift+R) để bỏ cache trình duyệt
+
+### Nếu hiện "Server error"
+- Cloudflare Dashboard → Pages → project → Observability/Logs
+- Xem error message cụ thể
