@@ -77,9 +77,8 @@ export async function fetchRelatedPosts(
   limit: number = 3
 ): Promise<Post[]> {
   try {
-    // Strategy: lấy nhiều bài cùng category, filter bỏ bài hiện tại
     const params = new URLSearchParams();
-    params.set('limit', String(limit + 1)); // +1 để có dự phòng nếu bài hiện tại trong list
+    params.set('limit', String(limit + 1));
     if (categorySlug) params.set('category', categorySlug);
 
     const url = `${apiBase(env)}/api/public/posts?${params}`;
