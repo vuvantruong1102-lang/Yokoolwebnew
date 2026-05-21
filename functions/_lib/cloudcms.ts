@@ -175,6 +175,7 @@ export function renderHead(opts: {
 
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/blog-enhance.css">
+  <link rel="stylesheet" href="/news-v2.css">
   ${opts.jsonLd ? `<script type="application/ld+json">${JSON.stringify(opts.jsonLd)}</script>` : ''}
   `.trim();
 }
