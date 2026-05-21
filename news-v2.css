@@ -14,7 +14,7 @@
 }
 
 .news-hero-v2 {
-  padding: 72px 0 48px;
+  padding: 140px 0 48px;
   background: white;
   border-bottom: 1px solid #f0f0f0;
 }
@@ -468,7 +468,7 @@
 
 @media (max-width: 640px) {
   .news-hero-v2 {
-    padding: 48px 0 32px;
+    padding: 100px 0 32px;
   }
   .news-featured-v2 {
     padding: 32px 0 16px;
