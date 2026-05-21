@@ -1,7 +1,7 @@
 // ============================================================
 // /functions/news.ts
 // Trang danh sách tin tức - SSR
-// Bắt URL /news.html (matches /news.html trong Pages routing)
+// Bắt URL /news (matches /news trong Pages routing)
 // ============================================================
 
 import {
@@ -43,7 +43,7 @@ function renderNewsListPage(
     : 'Tin tức · Yokool';
   const description =
     'Tin tức công nghệ mới nhất từ Yokool. Hướng dẫn sử dụng sạc dự phòng, củ sạc nhanh, ổ điện du lịch và những đánh giá sản phẩm chân thực.';
-  const canonical = `${baseUrl}/news.html${page > 1 ? `?page=${page}` : ''}`;
+  const canonical = `${baseUrl}/news${page > 1 ? `?page=${page}` : ''}`;
 
   // JSON-LD: ItemList Schema
   const itemListSchema = {
@@ -54,7 +54,7 @@ function renderNewsListPage(
     itemListElement: posts.map((post, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      url: `${baseUrl}/news/${post.slug}.html`,
+      url: `${baseUrl}/news/${post.slug}`,
       name: post.title,
     })),
   };
@@ -92,7 +92,7 @@ ${renderHeader()}
       ${posts.length === 0
         ? `<div class="news-empty">
             <p>Chưa có bài viết nào${category ? ` trong danh mục "${escapeHtml(category)}"` : ''}.</p>
-            <a href="/news.html" class="cta-button cta-button--ghost">Xem tất cả tin tức →</a>
+            <a href="/news" class="cta-button cta-button--ghost">Xem tất cả tin tức →</a>
           </div>`
         : `<div class="news-grid">
             ${posts.map((post) => renderPostCard(post)).join('\n')}
@@ -110,7 +110,7 @@ ${renderFooter()}
 }
 
 function renderPostCard(post: Post): string {
-  const url = `/news/${post.slug}.html`;
+  const url = `/news/${post.slug}`;
   const image = post.og_image_url || '/images/og-default.jpg';
   const date = formatDateVN(post.published_at);
   const dateIso = isoDate(post.published_at);
@@ -149,12 +149,12 @@ function renderPagination(currentPage: number, itemsCount: number, category: str
   return `
   <nav class="news-pagination" aria-label="Phân trang">
     ${hasPrev
-      ? `<a href="/news.html?page=${currentPage - 1}${catParam}" class="news-page-btn">← Trang trước</a>`
+      ? `<a href="/news?page=${currentPage - 1}${catParam}" class="news-page-btn">← Trang trước</a>`
       : `<span class="news-page-btn news-page-btn--disabled">← Trang trước</span>`
     }
     <span class="news-page-current">Trang ${currentPage}</span>
     ${hasNext
-      ? `<a href="/news.html?page=${currentPage + 1}${catParam}" class="news-page-btn">Trang sau →</a>`
+      ? `<a href="/news?page=${currentPage + 1}${catParam}" class="news-page-btn">Trang sau →</a>`
       : `<span class="news-page-btn news-page-btn--disabled">Trang sau →</span>`
     }
   </nav>

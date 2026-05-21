@@ -20,16 +20,24 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       const apiXml = await apiResp.text();
       // Parse rất đơn giản: extract các <url>...</url> blocks
       const matches = apiXml.match(/<url>[\s\S]*?<\/url>/g) || [];
-      // Replace /blog/ thành /news/ vì site dùng /news/ làm path
       postsUrls = matches
-        .map((u) => u.replace(/\/blog\//g, '/news/'))
+        .map((u) =>
+          u
+            // CMS API có thể trả /blog/ (legacy), đổi sang /news/
+            .replace(/\/blog\//g, '/news/')
+            // Nếu host trong API là example.com (env SITE_URL chưa cấu hình),
+            // thay bằng host yokool.vn thực tế
+            .replace(/https?:\/\/example\.com/g, baseUrl)
+            // Đảm bảo URL bài viết KHÔNG có .html (modern URL)
+            .replace(/(\/news\/[^<]+?)\.html(<\/loc>)/g, '$1$2')
+        )
         .join('\n');
     }
 
     // URLs static (các trang chính)
     const staticUrls = [
       { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'daily' },
-      { loc: `${baseUrl}/news.html`, priority: '0.9', changefreq: 'daily' },
+      { loc: `${baseUrl}/news`, priority: '0.9', changefreq: 'daily' },
       { loc: `${baseUrl}/products/jp395.html`, priority: '0.9', changefreq: 'weekly' },
       { loc: `${baseUrl}/products/rc502.html`, priority: '0.9', changefreq: 'weekly' },
       { loc: `${baseUrl}/products/sl207.html`, priority: '0.9', changefreq: 'weekly' },
