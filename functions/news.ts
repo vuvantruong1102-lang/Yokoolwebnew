@@ -1,7 +1,7 @@
 // ============================================================
 // /functions/news.ts
-// Trang danh sách bài viết tại /news.html
-// Dùng class news-hero, news-list-grid, news-card (đã có sẵn trong styles.css)
+// Trang danh sách tin tức - SSR
+// Bắt URL /news.html (matches /news.html trong Pages routing)
 // ============================================================
 
 import {
@@ -12,139 +12,151 @@ import {
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   const url = new URL(context.request.url);
-  const page = parseInt(url.searchParams.get('page') ?? '1', 10);
-  const category = url.searchParams.get('category') ?? undefined;
   const baseUrl = url.origin;
+  const page = Math.max(1, parseInt(url.searchParams.get('page') ?? '1'));
+  const category = url.searchParams.get('category') ?? undefined;
 
-  let posts: Post[] = [];
   try {
     const data = await fetchPostsList(context.env, { page, limit: 12, category });
-    posts = data.items;
-  } catch (err) {
-    console.error('News list fetch failed:', err);
-    // Tiếp tục render với danh sách rỗng thay vì 500
-  }
 
-  return new Response(renderListPage(posts, page, baseUrl, category), {
-    status: 200,
-    headers: {
-      'content-type': 'text/html; charset=utf-8',
-      'cache-control': 'public, max-age=60, s-maxage=300',
-    },
-  });
+    return new Response(renderNewsListPage(data.items, page, category, baseUrl), {
+      status: 200,
+      headers: {
+        'content-type': 'text/html; charset=utf-8',
+        'cache-control': 'public, max-age=60, s-maxage=300',
+      },
+    });
+  } catch (err: any) {
+    console.error('Error rendering news list:', err);
+    return new Response(`Server error: ${err.message}`, { status: 500 });
+  }
 };
 
-function renderListPage(posts: Post[], page: number, baseUrl: string, category?: string): string {
+function renderNewsListPage(
+  posts: Post[],
+  page: number,
+  category: string | undefined,
+  baseUrl: string
+): string {
   const title = category
-    ? `Tin tức ${category} — Yokool`
-    : 'Tin tức — Yokool';
-  const description = 'Tin tức và kiến thức công nghệ từ Yokool: hướng dẫn chọn sạc dự phòng, công nghệ GaN, so sánh sản phẩm, mẹo sử dụng phụ kiện sạc hiệu quả nhất.';
+    ? `Tin tức · Danh mục: ${category} · Yokool`
+    : 'Tin tức · Yokool';
+  const description =
+    'Tin tức công nghệ mới nhất từ Yokool. Hướng dẫn sử dụng sạc dự phòng, củ sạc nhanh, ổ điện du lịch và những đánh giá sản phẩm chân thực.';
+  const canonical = `${baseUrl}/news.html${page > 1 ? `?page=${page}` : ''}`;
 
-  const headHtml = renderHead({
-    title,
-    description,
-    canonical: `${baseUrl}/news.html`,
-    ogImage: `${baseUrl}/images/banner-1.jpg`,
-  });
-
-  const content = posts.length === 0
-    ? renderEmptyState()
-    : renderPostsGrid(posts, page);
+  // JSON-LD: ItemList Schema
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: title,
+    numberOfItems: posts.length,
+    itemListElement: posts.map((post, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `${baseUrl}/news/${post.slug}.html`,
+      name: post.title,
+    })),
+  };
 
   return `<!DOCTYPE html>
 <html lang="vi">
 <head>
-${headHtml}
+${renderHead({
+  title,
+  description,
+  canonical,
+  ogTitle: title,
+  ogDescription: description,
+  ogImage: `${baseUrl}/images/og-default.jpg`,
+  ogType: 'website',
+  jsonLd: itemListSchema,
+})}
 </head>
 <body>
-
 ${renderHeader()}
 
-<section class="news-hero">
-  <div class="container">
-    <div class="news-hero-inner">
-      <span class="section-label">/ News &amp; updates</span>
-      <h1 class="news-hero-title">${category ? escapeHtml(category) : 'Tin tức Yokool.'}</h1>
-      <p class="news-hero-tagline">Cập nhật sản phẩm, công nghệ và câu chuyện thương hiệu.</p>
+<main class="news-page">
+  <section class="news-hero">
+    <div class="container">
+      <span class="section-label">/ Tin tức Yokool</span>
+      <h1 class="news-hero-title">Cập nhật. <em>Mỗi ngày</em>.</h1>
+      <p class="news-hero-tagline">
+        Hướng dẫn sử dụng, đánh giá sản phẩm và tin tức công nghệ mới nhất từ Yokool.
+      </p>
     </div>
-  </div>
-</section>
+  </section>
 
-${content}
+  <section class="news-list-section">
+    <div class="container">
+      ${posts.length === 0
+        ? `<div class="news-empty">
+            <p>Chưa có bài viết nào${category ? ` trong danh mục "${escapeHtml(category)}"` : ''}.</p>
+            <a href="/news.html" class="cta-button cta-button--ghost">Xem tất cả tin tức →</a>
+          </div>`
+        : `<div class="news-grid">
+            ${posts.map((post) => renderPostCard(post)).join('\n')}
+          </div>
+
+          ${renderPagination(page, posts.length, category)}`
+      }
+    </div>
+  </section>
+</main>
 
 ${renderFooter()}
-
 </body>
 </html>`;
 }
 
-function renderEmptyState(): string {
+function renderPostCard(post: Post): string {
+  const url = `/news/${post.slug}.html`;
+  const image = post.og_image_url || '/images/og-default.jpg';
+  const date = formatDateVN(post.published_at);
+  const dateIso = isoDate(post.published_at);
+  const readingTime = post.reading_time || 1;
+  const category = post.category_name;
+
   return `
-<section class="news-empty">
-  <div class="container">
-    <div class="news-empty-inner">
-      <div class="news-empty-mark">✦</div>
-      <h2 class="news-empty-title">Bài viết đang được chuẩn bị</h2>
-      <p class="news-empty-description">Đội ngũ Yokool đang biên soạn những bài viết chất lượng về công nghệ sạc, hướng dẫn sử dụng và câu chuyện thương hiệu. Quay lại sớm nhé!</p>
-      <div class="news-empty-actions">
-        <a href="/index.html" class="cta-button">
-          Về trang chủ
-          <span class="cta-arrow">→</span>
-        </a>
-        <a href="https://shopee.vn/tamayokoofficial" target="_blank" rel="noopener" class="cta-button cta-button--ghost">
-          Mua tại Shopee
-        </a>
+  <article class="news-card">
+    <a href="${url}" class="news-card-image-link">
+      <img src="${escapeHtml(image)}" alt="${escapeHtml(post.title)}" class="news-card-image" loading="lazy">
+    </a>
+    <div class="news-card-content">
+      ${category ? `<span class="news-card-category">${escapeHtml(category)}</span>` : ''}
+      <h2 class="news-card-title">
+        <a href="${url}">${escapeHtml(post.title)}</a>
+      </h2>
+      ${post.excerpt ? `<p class="news-card-excerpt">${escapeHtml(post.excerpt)}</p>` : ''}
+      <div class="news-card-meta">
+        <time datetime="${dateIso}">${date}</time>
+        <span class="news-card-dot">·</span>
+        <span>${readingTime} phút đọc</span>
       </div>
     </div>
-  </div>
-</section>`;
+  </article>
+  `.trim();
 }
 
-function renderPostsGrid(posts: Post[], page: number): string {
-  const cards = posts.map((post, idx) => renderPostCard(post, idx === 0 && page === 1)).join('\n');
+function renderPagination(currentPage: number, itemsCount: number, category: string | undefined): string {
+  // Đơn giản: nếu có 12 items thì có thể có page tiếp theo
+  const hasNext = itemsCount >= 12;
+  const hasPrev = currentPage > 1;
+  if (!hasNext && !hasPrev) return '';
+
+  const catParam = category ? `&category=${encodeURIComponent(category)}` : '';
 
   return `
-<section class="news-list-section">
-  <div class="container">
-    <div class="news-list-grid">
-${cards}
-    </div>
-${posts.length >= 12 ? renderPagination(page) : ''}
-  </div>
-</section>`;
-}
-
-function renderPostCard(post: Post, featured: boolean): string {
-  const dateStr = formatDateVN(post.published_at);
-  const classes = featured ? 'news-card news-card--featured' : 'news-card';
-  // Heading levels: featured = h2, còn lại = h3
-  const Tag = featured ? 'h2' : 'h3';
-
-  return `
-        <a href="/news/${escapeHtml(post.slug)}.html" class="${classes}">
-          <div class="news-card-thumb">
-            ${post.og_image_url
-              ? `<img src="${escapeHtml(post.og_image_url)}" alt="" loading="lazy">`
-              : `<img src="/images/banner-1.jpg" alt="" loading="lazy">`}
-          </div>
-          <div class="news-card-body">
-            ${post.category_name ? `<span class="news-card-category">${escapeHtml(post.category_name)}</span>` : ''}
-            <${Tag} class="news-card-title">${escapeHtml(post.title)}</${Tag}>
-            ${featured && post.excerpt ? `<p class="news-card-excerpt">${escapeHtml(post.excerpt)}</p>` : ''}
-            <div class="news-card-meta">
-              ${dateStr ? `<span>${escapeHtml(dateStr)}</span>` : ''}
-              ${dateStr && post.reading_time ? `<span aria-hidden="true">·</span>` : ''}
-              ${post.reading_time ? `<span>${post.reading_time} phút đọc</span>` : ''}
-            </div>
-          </div>
-        </a>`;
-}
-
-function renderPagination(page: number): string {
-  return `
-    <nav class="news-pagination" aria-label="Phân trang" style="display: flex; justify-content: center; gap: 16px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border-subtle, #e9ecef); font-family: var(--font-mono, monospace); font-size: 13px;">
-      ${page > 1 ? `<a href="?page=${page - 1}" class="cta-button cta-button--ghost cta-button--small">← Trang trước</a>` : ''}
-      <span style="align-self: center; color: var(--text-tertiary, #888);">Trang ${page}</span>
-      <a href="?page=${page + 1}" class="cta-button cta-button--ghost cta-button--small">Trang sau →</a>
-    </nav>`;
+  <nav class="news-pagination" aria-label="Phân trang">
+    ${hasPrev
+      ? `<a href="/news.html?page=${currentPage - 1}${catParam}" class="news-page-btn">← Trang trước</a>`
+      : `<span class="news-page-btn news-page-btn--disabled">← Trang trước</span>`
+    }
+    <span class="news-page-current">Trang ${currentPage}</span>
+    ${hasNext
+      ? `<a href="/news.html?page=${currentPage + 1}${catParam}" class="news-page-btn">Trang sau →</a>`
+      : `<span class="news-page-btn news-page-btn--disabled">Trang sau →</span>`
+    }
+  </nav>
+  `.trim();
 }
