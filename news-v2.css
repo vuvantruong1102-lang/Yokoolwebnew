@@ -710,3 +710,41 @@
     display: block;
   }
 }
+
+/* ============================================================
+   TEXT ALIGN & FONT SIZE từ Tiptap editor
+   Đảm bảo inline style từ editor được respect
+   ============================================================ */
+
+/* Text align */
+.article-body p[style*="text-align"],
+.article-body h1[style*="text-align"],
+.article-body h2[style*="text-align"],
+.article-body h3[style*="text-align"],
+.article-body h4[style*="text-align"],
+.article-body h5[style*="text-align"],
+.article-body h6[style*="text-align"] {
+  /* inherit từ inline style, không override */
+}
+
+/* Vì các CSS heading khác có thể có text-align mặc định (vd center cho h1),
+   ta cần ưu tiên inline style của editor */
+.article-body p,
+.article-body h1,
+.article-body h2,
+.article-body h3,
+.article-body h4 {
+  text-align: inherit;
+}
+
+/* Font size từ <span style="font-size: ...">
+   Tiptap render span inline, inline style đã đủ priority */
+.article-body span[style*="font-size"] {
+  /* Inline style ưu tiên */
+  line-height: 1.4; /* line-height theo từ chữ to nhỏ */
+}
+
+/* Đảm bảo span font-size không bị reset bởi CSS chung của paragraph */
+.article-body p span[style*="font-size"] {
+  display: inline;
+}
