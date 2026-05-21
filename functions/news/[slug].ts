@@ -146,7 +146,7 @@ ${renderHeader()}
     <div class="article-body">
       ${post.excerpt ? `<p class="article-lede">${escapeHtml(post.excerpt)}</p>` : ''}
 
-      ${post.content_html ?? ''}
+      ${processContentHtml(post.content_html ?? '')}
 
       <div class="article-cta">
         <span class="article-cta-label">Khám phá thêm</span>
@@ -297,4 +297,25 @@ function stripTags(html: string): string {
     .replace(/&#39;/g, "'")
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+// ============================================================
+// Process content HTML before rendering on frontend
+// - Strip "open" attribute từ <details class="faq-item">
+//   để FAQ mặc định đóng trên website (user click để mở)
+// - Áp dụng cho cả bài cũ và bài mới (fix retroactive)
+// ============================================================
+function processContentHtml(html: string): string {
+  if (!html) return '';
+
+  // Pattern: <details class="faq-item" open="true"> hoặc <details ... open ...>
+  // Match cả các biến thể: open, open="true", open="", open='true'
+  return html.replace(
+    /<details([^>]*?\bclass="[^"]*\bfaq-item\b[^"]*"[^>]*?)>/gi,
+    (match, attrs) => {
+      // Strip open attribute (có thể có hoặc không có value)
+      const cleanedAttrs = attrs.replace(/\s+open(?:\s*=\s*(?:"[^"]*"|'[^']*'|\S+))?/gi, '');
+      return `<details${cleanedAttrs}>`;
+    }
+  );
 }
