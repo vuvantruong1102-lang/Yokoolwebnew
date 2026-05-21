@@ -6,7 +6,7 @@
 
 import {
   type Env, type Post,
-  fetchPostBySlug, renderHead, renderHeader, renderFooter,
+  fetchPostBySlug, fetchRelatedPosts, renderHead, renderHeader, renderFooter,
   escapeHtml, formatDateVN, isoDate,
 } from '../_lib/cloudcms';
 
@@ -28,7 +28,10 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       });
     }
 
-    return new Response(renderPostPage(post, baseUrl), {
+    // Fetch related posts (cùng category, không phải bài hiện tại)
+    const related = await fetchRelatedPosts(context.env, post.id, post.category_slug, 3);
+
+    return new Response(renderPostPage(post, related, baseUrl), {
       status: 200,
       headers: {
         'content-type': 'text/html; charset=utf-8',
@@ -41,7 +44,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   }
 };
 
-function renderPostPage(post: Post, baseUrl: string): string {
+function renderPostPage(post: Post, related: Post[], baseUrl: string): string {
   const title = post.meta_title || post.title;
   const description = post.meta_description || post.excerpt || '';
   const canonical = post.canonical_url || `${baseUrl}/news/${post.slug}.html`;
@@ -141,6 +144,8 @@ ${renderHeader()}
     </div>
   </div>
 
+  ${renderRelatedSection(related)}
+
 </article>
 
 ${renderFooter()}
@@ -185,4 +190,33 @@ ${renderFooter()}
 
 </body>
 </html>`;
+}
+
+// ============================================================
+// Related Posts section
+// ============================================================
+function renderRelatedSection(related: Post[]): string {
+  if (!related || related.length === 0) return '';
+
+  const cards = related.map((p) => `
+    <a href="/news/${escapeHtml(p.slug)}.html" class="related-card">
+      <div class="related-card-thumb">
+        ${p.og_image_url
+          ? `<img src="${escapeHtml(p.og_image_url)}" alt="" loading="lazy">`
+          : `<img src="/images/banner-1.jpg" alt="" loading="lazy">`}
+      </div>
+      <div class="related-card-body">
+        ${p.category_name ? `<span class="related-card-category">${escapeHtml(p.category_name)}</span>` : ''}
+        <h3 class="related-card-title">${escapeHtml(p.title)}</h3>
+      </div>
+    </a>
+  `).join('\n');
+
+  return `
+  <section class="article-related-section" aria-label="Bài viết liên quan">
+    <h2>Đọc thêm</h2>
+    <div class="article-related-grid">
+      ${cards}
+    </div>
+  </section>`;
 }
