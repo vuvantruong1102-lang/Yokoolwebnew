@@ -748,3 +748,57 @@
 .article-body p span[style*="font-size"] {
   display: inline;
 }
+
+/* ============================================================
+   FIX: Inline color từ Tiptap Color extension
+   styles.css của Yokool có `.article-body p { color: var(--text-secondary) }`
+   với specificity (0,1,1). Inline style="color" specificity là (1,0,0,0) - cao hơn.
+   Nhưng đôi khi cascade order ưu tiên, ta cần selector cụ thể hơn.
+   ============================================================ */
+
+/* Trick: dùng selector có style attribute → tăng specificity
+   `.article-body span[style]` có specificity (0,2,1) > parent p (0,1,1) */
+.article-body p span[style],
+.article-body h1 span[style],
+.article-body h2 span[style],
+.article-body h3 span[style],
+.article-body h4 span[style],
+.article-body h5 span[style],
+.article-body h6 span[style],
+.article-body li span[style],
+.article-body blockquote span[style],
+.article-body td span[style],
+.article-body th span[style] {
+  /* Inline style sẽ tự apply (color, font-size, background...)
+     Block này chỉ để bump specificity, không override gì */
+  color: inherit;
+}
+
+/* Override specifically khi span có inline color attribute */
+.article-body [style*="color:"] {
+  color: revert;
+}
+
+/* ============================================================
+   TITLE ALIGN - căn lề tiêu đề bài viết
+   Render từ inline style="text-align: ..." trong template
+   ============================================================ */
+
+.article-header .article-title {
+  text-align: inherit;
+}
+
+.article-header[data-title-align="center"] .article-meta,
+.article-header[data-title-align="center"] .article-category {
+  text-align: center;
+}
+
+.article-header[data-title-align="right"] .article-meta,
+.article-header[data-title-align="right"] .article-category {
+  text-align: right;
+}
+
+.article-header[data-title-align="center"] .article-category,
+.article-header[data-title-align="right"] .article-category {
+  display: inline-block;
+}
