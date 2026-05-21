@@ -15,17 +15,16 @@
    2. Table of Contents
    ============================================================ */
 #article-toc {
-  position: fixed;
-  right: 24px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 260px;
-  max-height: 70vh;
-  background: white;
+  /* Inline block ở đầu bài viết - không còn sticky bên phải */
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 0 32px;
+  background: #fafafa;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  z-index: 50;
+  box-shadow: none;
+  z-index: 1;
   overflow: hidden;
   font-family: var(--font-sans, 'Be Vietnam Pro', sans-serif);
   display: flex;
@@ -36,7 +35,7 @@
   display: none;
 }
 #article-toc.is-collapsed {
-  width: auto;
+  /* Khi thu gọn vẫn full-width, không thu nhỏ về icon */
   max-height: none;
 }
 
@@ -137,21 +136,11 @@
 
 /* Responsive - TOC ẩn dưới 1280px (vì không có chỗ) */
 @media (max-width: 1280px) {
-  #article-toc {
-    position: relative;
-    top: 0;
-    right: 0;
-    transform: none;
-    width: 100%;
-    max-width: 720px;
-    margin: 0 auto 32px;
-    max-height: none;
-  }
+  /* Desktop đã inline, không cần override */
 }
 @media (max-width: 640px) {
   #article-toc {
-    margin: 0 16px 24px;
-    width: auto;
+    margin: 0 0 24px;
   }
   .toc-list {
     max-height: 40vh;

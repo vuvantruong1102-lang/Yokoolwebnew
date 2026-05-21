@@ -112,7 +112,10 @@
       toggleBtn.textContent = collapsed ? '+' : '−';
     });
 
-    document.body.appendChild(toc);
+    // Inject TOC vào ĐẦU article-body (sau tiêu đề + ảnh cover, trước nội dung)
+    // Trước đây: document.body.appendChild(toc) → sticky bên phải
+    // Bây giờ: insert vào đầu article-body như block inline
+    articleBody.insertBefore(toc, articleBody.firstChild);
 
     // Highlight TOC item theo section đang xem
     const tocLinks = toc.querySelectorAll('.toc-list a');
