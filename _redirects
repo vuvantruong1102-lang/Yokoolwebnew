@@ -1,13 +1,15 @@
 # ============================================================
-# Cloudflare Pages _redirects
-# Cho phép URL gọn không cần .html: /news/abc → /news/abc.html
+# _redirects - Cloudflare Pages redirect rules
+# Format: <source> <destination> <status>
 # ============================================================
 
-# Old news.html (đã thay bằng function) — đảm bảo không conflict
-# Function /functions/news.ts sẽ tự bắt /news (không có .html)
-# Nhưng /news.html static cũ vẫn được serve nếu file vẫn còn → xoá file news.html cũ trong repo
+# Legacy news URLs → modern URLs (giữ SEO)
+/news.html         /news                    301
+/news.html/        /news                    301
 
-# Pretty URL cho bài viết
-/news/:slug   /news/:slug.html   200
+# Legacy article URLs với .html → modern không có .html
+# Cloudflare auto strip .html nhưng để tường minh
+/news/:slug.html   /news/:slug              301
 
-# Hoặc giữ nguyên cả 2 dạng URL đều hoạt động
+# Optional: trailing slash cleanup
+/news/             /news                    301
