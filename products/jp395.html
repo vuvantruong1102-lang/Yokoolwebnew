@@ -151,22 +151,57 @@
   <section class="product-hero">
     <div class="container product-hero-inner">
       <div class="product-hero-visual">
-        <img src="../images/product-jp395.jpg" alt="Yokool JP395 sạc dự phòng từ tính 10.000mAh">
+        <div class="product-gallery">
+          <div class="product-gallery-main">
+            <img id="galleryMain" src="../images/product-jp395.jpg" alt="Yokool JP395 sạc dự phòng từ tính 10.000mAh">
+            <button class="product-gallery-arrow product-gallery-arrow--prev" type="button" id="galleryPrev" aria-label="Ảnh trước">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button class="product-gallery-arrow product-gallery-arrow--next" type="button" id="galleryNext" aria-label="Ảnh kế tiếp">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+          <div class="product-gallery-thumbs">
+            <button class="product-gallery-thumb is-active" type="button" data-src="../images/product-jp395.jpg" aria-label="Ảnh JP395 màu Đen và Trắng">
+              <img src="../images/product-jp395.jpg" alt="JP395 màu Đen và Trắng">
+            </button>
+            <button class="product-gallery-thumb" type="button" data-src="../images/jp395-detail.jpg" aria-label="JP395 mặt trước và mặt sau">
+              <img src="../images/jp395-detail.jpg" alt="JP395 mặt trước và mặt sau">
+            </button>
+            <button class="product-gallery-thumb" type="button" data-src="../images/jp395-display.jpg" aria-label="JP395 màn hình LED hiển thị % pin">
+              <img src="../images/jp395-display.jpg" alt="Màn hình LED hiển thị % pin">
+            </button>
+            <button class="product-gallery-thumb" type="button" data-src="../images/jp395-charge.jpg" aria-label="JP395 sạc nhanh qua dây Type-C tích hợp">
+              <img src="../images/jp395-charge.jpg" alt="Sạc nhanh qua dây Type-C tích hợp">
+            </button>
+            <button class="product-gallery-thumb" type="button" data-src="../images/jp395-stand.jpg" aria-label="JP395 làm giá đỡ MagSafe cho iPhone">
+              <img src="../images/jp395-stand.jpg" alt="Làm giá đỡ MagSafe cho iPhone">
+            </button>
+            <button class="product-gallery-thumb" type="button" data-src="../images/jp395-hand.jpg" aria-label="JP395 nhỏ gọn cầm gọn trong tay">
+              <img src="../images/jp395-hand.jpg" alt="Nhỏ gọn cầm gọn trong tay">
+            </button>
+            <button class="product-gallery-thumb" type="button" data-src="../images/jp395-lifestyle.jpg" aria-label="JP395 hít vào lưng iPhone khi di chuyển">
+              <img src="../images/jp395-lifestyle.jpg" alt="Hít vào lưng iPhone khi di chuyển">
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="product-hero-content">
         <span class="section-label">/ Power bank · 10.000mAh</span>
         <h1 class="product-hero-title">JP395</h1>
         <p class="product-hero-tagline">
-          Sạc dự phòng từ tính MagSafe 10.000mAh. PD 22.5W. Sạc không dây 15W. Dây type-C tích hợp.
+          Sạc dự phòng từ tính MagSafe 10.000mAh. PD 22.5W. Sạc không dây 15W. Dây Type-C tích hợp gập thành quai xách, kiêm giá đỡ iPhone.
         </p>
 
         <ul class="product-hero-bullets">
           <li>Lõi pin Lithium Polymer cao cấp dung lượng 10.000mAh</li>
           <li>Sạc nhanh PD 22.5W cả chiều ra lẫn vào</li>
-          <li>Dây Type-C tích hợp sẵn — không cần mang theo dây rời</li>
+          <li>Dây Type-C tích hợp sẵn — gập lại thành quai xách tiện lợi</li>
           <li>Sạc không dây MagSafe 15W (7.5W cho iPhone) — đặt là sạc</li>
-          <li>Màn hình LED hiển thị % pin còn lại</li>
+          <li>Vừa sạc vừa làm giá đỡ iPhone xem phim, gọi video rảnh tay</li>
+          <li>Màn hình LED hiển thị chính xác % pin còn lại</li>
+          <li>Hai phiên bản màu: Đen và Trắng</li>
         </ul>
 
         <div class="product-color-section">
@@ -174,7 +209,10 @@
             Màu sắc <span class="product-color-label-value" id="colorLabelValue">Đen</span>
           </div>
           <div class="product-color-swatches" id="colorSwatches">
-            <button type="button" class="product-color-swatch product-color-swatch--black is-active is-single" data-color="Đen" aria-label="Màu Đen">
+            <button type="button" class="product-color-swatch product-color-swatch--black is-active" data-color="Đen" data-image="../images/product-jp395.jpg" aria-label="Màu Đen">
+              <span class="product-color-swatch-fill"></span>
+            </button>
+            <button type="button" class="product-color-swatch product-color-swatch--white" data-color="Trắng" data-image="../images/jp395-display.jpg" aria-label="Màu Trắng">
               <span class="product-color-swatch-fill"></span>
             </button>
           </div>
@@ -236,14 +274,14 @@
           <div class="feature-icon-wrap">⊟</div>
           <h3 class="feature-title">Dây Type-C tích hợp</h3>
           <p class="feature-description">
-            Dây sạc type-C gắn liền vào thân pin — vừa sạc ra cho thiết bị, vừa sạc vào cho pin.
+            Dây sạc Type-C gắn liền vào thân pin — vừa sạc ra cho thiết bị, vừa sạc vào cho pin. Gập lại thành quai xách gọn gàng.
           </p>
         </div>
         <div class="feature-card">
           <div class="feature-icon-wrap">📡</div>
-          <h3 class="feature-title">MagSafe 15W</h3>
+          <h3 class="feature-title">MagSafe 15W + Giá đỡ</h3>
           <p class="feature-description">
-            Hít chặt vào lưng iPhone bằng nam châm. Sạc không dây Qi 15W (7.5W cho iPhone).
+            Hít chặt vào lưng iPhone bằng nam châm, sạc không dây 15W. Dựng nghiêng làm giá đỡ xem phim, gọi video rảnh tay.
           </p>
         </div>
         <div class="feature-card">
@@ -260,14 +298,14 @@
   <section class="showcase">
     <div class="container showcase-inner">
       <div class="showcase-visual">
-        <img src="../images/product-jp395.jpg" alt="JP395 sạc không dây MagSafe">
+        <img src="../images/jp395-display.jpg" alt="JP395 sạc không dây MagSafe — màu Đen và Trắng">
       </div>
       <div class="showcase-content">
         <span class="section-label">/ MagSafe wireless</span>
         <h2 class="showcase-title">Hít vào iPhone.<br>Tự sạc.</h2>
         <p class="showcase-description">
           Vòng nam châm trên mặt JP395 hít chặt vào lưng iPhone 12 trở lên hoặc ốp lưng có MagSafe.
-          Sạc không dây 15W tự động kích hoạt — không cần cắm dây, không lo rớt.
+          Sạc không dây 15W tự động kích hoạt — không cần cắm dây, không lo rớt. Có cả hai phiên bản màu Đen và Trắng.
         </p>
         <ul class="showcase-bullets">
           <li>Tương thích iPhone 12, 13, 14, 15, 16 với MagSafe</li>
@@ -282,7 +320,7 @@
   <section class="showcase showcase--reverse">
     <div class="container showcase-inner">
       <div class="showcase-visual">
-        <img src="../images/product-jp395.jpg" alt="JP395 sạc nhanh PD 22.5W">
+        <img src="../images/jp395-charge.jpg" alt="JP395 sạc nhanh PD 22.5W qua dây Type-C tích hợp">
       </div>
       <div class="showcase-content">
         <span class="section-label">/ PD 22.5W bi-directional</span>
@@ -296,6 +334,50 @@
           <li>Cổng type-C riêng — sạc vào cho pin</li>
           <li>Cả 2 đều hỗ trợ PD 22.5W</li>
           <li>iPhone 15 — 0% lên 50% trong 25 phút</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="showcase">
+    <div class="container showcase-inner">
+      <div class="showcase-visual">
+        <img src="../images/jp395-stand.jpg" alt="JP395 dựng làm giá đỡ MagSafe cho iPhone, dây Type-C gập thành quai xách">
+      </div>
+      <div class="showcase-content">
+        <span class="section-label">/ Stand &amp; strap</span>
+        <h2 class="showcase-title">Giá đỡ rảnh tay.<br>Quai xách gọn gàng.</h2>
+        <p class="showcase-description">
+          Dựng nghiêng JP395 và hít iPhone vào mặt nam châm — bạn có ngay một giá đỡ vừa sạc vừa xem phim,
+          gọi video, lướt mạng mà không phải cầm máy. Dây Type-C tích hợp gập gọn thành quai xách, dễ móc vào balo, túi hay ngón tay khi di chuyển.
+        </p>
+        <ul class="showcase-bullets">
+          <li>Vừa sạc không dây vừa làm giá đỡ iPhone</li>
+          <li>Dây Type-C bện dù gập lại thành quai xách</li>
+          <li>Thân máy nhỏ gọn, lọt lòng bàn tay</li>
+          <li>Mang theo cả ngày — đi làm, đi học, đi chơi</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="showcase showcase--reverse">
+    <div class="container showcase-inner">
+      <div class="showcase-visual">
+        <img src="../images/jp395-display.jpg" alt="JP395 màn hình LED hiển thị % pin, bản Đen và Trắng">
+      </div>
+      <div class="showcase-content">
+        <span class="section-label">/ LED display</span>
+        <h2 class="showcase-title">Biết chính xác<br>còn bao nhiêu pin.</h2>
+        <p class="showcase-description">
+          Màn hình LED hiển thị con số % pin còn lại rõ ràng, không còn dãy đèn mờ khó đoán.
+          Luôn chủ động biết khi nào cần nạp lại. Chọn màu Đen cá tính hoặc Trắng tinh tế hợp gu.
+        </p>
+        <ul class="showcase-bullets">
+          <li>Hiển thị % pin dạng số trên màn hình LED</li>
+          <li>Đèn báo trạng thái sạc ra / sạc vào</li>
+          <li>Hai phiên bản màu: Đen và Trắng</li>
+          <li>Lớp vỏ nhám chống bám vân tay</li>
         </ul>
       </div>
     </div>
@@ -351,7 +433,7 @@
         </div>
         <div class="specs-row">
           <div class="specs-label">Màu sắc</div>
-          <div class="specs-value">Đen</div>
+          <div class="specs-value">Đen, Trắng</div>
         </div>
         <div class="specs-row">
           <div class="specs-label">Chứng nhận an toàn</div>
@@ -521,5 +603,68 @@
   </aside>
 
   <script src="../script.js"></script>
+  <script>
+    // Product gallery + color picker
+    (function() {
+      const main = document.getElementById('galleryMain');
+      const thumbs = document.querySelectorAll('.product-gallery-thumb');
+      const swatches = document.querySelectorAll('.product-color-swatch[data-image]');
+      const colorLabel = document.getElementById('colorLabelValue');
+
+      // Thumbnail click
+      thumbs.forEach(t => t.addEventListener('click', () => {
+        const src = t.dataset.src;
+        if (!src || !main) return;
+        main.src = src;
+        thumbs.forEach(x => x.classList.remove('is-active'));
+        t.classList.add('is-active');
+      }));
+
+      // Arrow buttons: prev/next cycling through thumbs
+      const prevBtn = document.getElementById('galleryPrev');
+      const nextBtn = document.getElementById('galleryNext');
+      function getActiveIndex() {
+        let idx = 0;
+        thumbs.forEach((t, i) => { if (t.classList.contains('is-active')) idx = i; });
+        return idx;
+      }
+      function activateThumb(i) {
+        if (!thumbs.length) return;
+        const wrapped = ((i % thumbs.length) + thumbs.length) % thumbs.length;
+        const t = thumbs[wrapped];
+        const src = t.dataset.src;
+        if (!src || !main) return;
+        main.src = src;
+        thumbs.forEach(x => x.classList.remove('is-active'));
+        t.classList.add('is-active');
+      }
+      if (prevBtn) prevBtn.addEventListener('click', () => activateThumb(getActiveIndex() - 1));
+      if (nextBtn) nextBtn.addEventListener('click', () => activateThumb(getActiveIndex() + 1));
+
+      // Color swatch click — change main image, label, and update buttons' data
+      swatches.forEach(s => s.addEventListener('click', () => {
+        const img = s.dataset.image;
+        const color = s.dataset.color;
+        if (!img || !main) return;
+
+        main.src = img;
+        if (thumbs[0]) {
+          thumbs[0].dataset.src = img;
+          thumbs[0].querySelector('img').src = img;
+          thumbs.forEach(x => x.classList.remove('is-active'));
+          thumbs[0].classList.add('is-active');
+        }
+        if (colorLabel) colorLabel.textContent = color;
+        swatches.forEach(x => x.classList.remove('is-active'));
+        s.classList.add('is-active');
+
+        document.querySelectorAll('.buy-now-btn, .add-to-cart-btn').forEach(btn => {
+          const baseName = 'Sạc dự phòng Yokool JP395';
+          btn.dataset.name = baseName + ' (' + color + ')';
+          btn.dataset.image = img;
+        });
+      }));
+    })();
+  </script>
 </body>
 </html>
