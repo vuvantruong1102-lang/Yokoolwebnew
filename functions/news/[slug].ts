@@ -106,6 +106,14 @@ function renderPostPage(post: Post, related: Post[], baseUrl: string): string {
   return `<!DOCTYPE html>
 <html lang="vi">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17796115003"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-17796115003');
+</script>
 ${headHtml}
 ${faqJsonLdScript}
 </head>
@@ -170,6 +178,14 @@ function notFoundHtml(): string {
   return `<!DOCTYPE html>
 <html lang="vi">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17796115003"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-17796115003');
+</script>
 ${renderHead({
   title: 'Không tìm thấy bài viết — Yokool',
   description: 'Bài viết bạn tìm có thể đã bị xoá hoặc URL không đúng.',
