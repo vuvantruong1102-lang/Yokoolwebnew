@@ -105,7 +105,7 @@ function renderNewsListPage(
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-17796115003');
-  gtag('config', 'G-38WSHEN3PE');
+  gtag('config', 'G-YPXHZWFBGY');
 </script>
 ${renderHead({
   title,
