@@ -88,6 +88,35 @@
     }
   }
   </script>
+  <style>
+    /* Video trong gallery chính */
+    .product-gallery-video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+      display: block;
+    }
+    /* Thumbnail video: nút play overlay */
+    .product-gallery-thumb--video { position: relative; }
+    .product-gallery-play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 30px; height: 30px;
+      background: rgba(0,0,0,0.55);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .product-gallery-play svg {
+      width: 16px; height: 16px;
+      color: #fff;
+      margin-left: 2px;
+    }
+  </style>
 </head>
 <body>
 
@@ -158,53 +187,13 @@
     </div>
   </header>
 
-  <section class="rc-video-banner">
-    <div class="rc-video-frame">
-      <video
-        class="rc-video"
-        src="../images/rc502-video.mp4"
-        poster="../images/rc502-video-poster.jpg"
-        autoplay muted loop playsinline preload="metadata"></video>
-    </div>
-  </section>
-
-  <style>
-    .rc-video-banner {
-      background: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 32px 16px;
-      overflow: hidden;
-    }
-    .rc-video-frame {
-      width: 460px;
-      max-width: 92vw;
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.18);
-      background: #000;
-      line-height: 0;
-    }
-    .rc-video {
-      width: 100%;
-      height: auto;
-      display: block;
-      aspect-ratio: 9 / 16;
-      object-fit: cover;
-    }
-    @media (max-width: 860px) {
-      .rc-video-banner { padding: 20px 12px; }
-      .rc-video-frame { width: 340px; }
-    }
-  </style>
-
   <section class="product-hero" id="muangay">
     <div class="container product-hero-inner">
       <div class="product-hero-visual">
         <div class="product-gallery">
           <div class="product-gallery-main">
             <img id="galleryMain" src="../images/product-rc502.jpg" alt="Yokool RC502 củ sạc nhanh PD 65W GaN">
+            <video id="galleryVideo" class="product-gallery-video" src="../images/rc502-video.mp4" poster="../images/rc502-video-poster.jpg" muted loop playsinline preload="metadata" style="display:none;"></video>
             <button class="product-gallery-arrow product-gallery-arrow--prev" type="button" id="galleryPrev" aria-label="Ảnh trước">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
@@ -213,7 +202,13 @@
             </button>
           </div>
           <div class="product-gallery-thumbs">
-            <button class="product-gallery-thumb is-active" type="button" data-src="../images/product-rc502.jpg" aria-label="RC502 tổng thể">
+            <button class="product-gallery-thumb product-gallery-thumb--video is-active" type="button" data-type="video" aria-label="Video sản phẩm RC502">
+              <img src="../images/rc502-video-poster.jpg" alt="Video RC502">
+              <span class="product-gallery-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+              </span>
+            </button>
+            <button class="product-gallery-thumb" type="button" data-src="../images/product-rc502.jpg" aria-label="RC502 tổng thể">
               <img src="../images/product-rc502.jpg" alt="RC502 chính">
             </button>
             <button class="product-gallery-thumb" type="button" data-src="../images/rc502-g1.jpg" aria-label="RC502 ba cổng sạc">
@@ -709,14 +704,30 @@
     // Gallery + color picker (single color product)
     (function() {
       const main = document.getElementById('galleryMain');
+      const video = document.getElementById('galleryVideo');
       const thumbs = document.querySelectorAll('.product-gallery-thumb');
-      thumbs.forEach(t => t.addEventListener('click', () => {
-        const src = t.dataset.src;
-        if (!src || !main) return;
-        main.src = src;
+
+      function showVideo() {
+        if (main) main.style.display = 'none';
+        if (video) { video.style.display = 'block'; video.play().catch(()=>{}); }
+      }
+      function showImage(src) {
+        if (video) { video.pause(); video.style.display = 'none'; }
+        if (main && src) { main.src = src; main.style.display = 'block'; }
+      }
+      function activate(t) {
+        if (!t) return;
+        if (t.dataset.type === 'video') showVideo();
+        else showImage(t.dataset.src);
         thumbs.forEach(x => x.classList.remove('is-active'));
         t.classList.add('is-active');
-      }));
+      }
+
+      thumbs.forEach(t => t.addEventListener('click', () => activate(t)));
+
+      // trạng thái ban đầu: video đang active -> hiện video
+      const initial = document.querySelector('.product-gallery-thumb.is-active');
+      if (initial) activate(initial);
 
       // Arrow buttons: prev/next cycling through thumbs
       const prevBtn = document.getElementById('galleryPrev');
@@ -729,12 +740,7 @@
       function activateThumb(i) {
         if (!thumbs.length) return;
         const wrapped = ((i % thumbs.length) + thumbs.length) % thumbs.length;
-        const t = thumbs[wrapped];
-        const src = t.dataset.src;
-        if (!src || !main) return;
-        main.src = src;
-        thumbs.forEach(x => x.classList.remove('is-active'));
-        t.classList.add('is-active');
+        activate(thumbs[wrapped]);
       }
       if (prevBtn) prevBtn.addEventListener('click', () => activateThumb(getActiveIndex() - 1));
       if (nextBtn) nextBtn.addEventListener('click', () => activateThumb(getActiveIndex() + 1));
