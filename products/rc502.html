@@ -158,7 +158,102 @@
     </div>
   </header>
 
-  <section class="product-hero">
+  <section class="rc-video-banner">
+    <div class="container rc-video-banner-inner">
+      <div class="rc-video-banner-text">
+        <span class="rc-video-kicker">/ FAST CHARGER · PD 65W GaN</span>
+        <h2 class="rc-video-title">RC502</h2>
+        <p class="rc-video-desc">
+          Củ sạc GaN 65W với dây Type-C rút gọn tích hợp.
+          Sạc nhanh laptop, điện thoại, tablet — gọn trong lòng bàn tay.
+        </p>
+        <a href="#muangay" class="rc-video-cta">Xem chi tiết →</a>
+      </div>
+      <div class="rc-video-frame">
+        <video
+          class="rc-video"
+          src="../images/rc502-video.mp4"
+          poster="../images/rc502-video-poster.jpg"
+          autoplay muted loop playsinline preload="metadata"></video>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .rc-video-banner {
+      background:
+        radial-gradient(900px 500px at 75% 35%, rgba(225,29,46,0.16), transparent 60%),
+        linear-gradient(120deg, #0e1320 0%, #161d2e 50%, #1d2740 100%);
+      padding: 56px 0;
+      overflow: hidden;
+    }
+    .rc-video-banner-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 56px;
+    }
+    .rc-video-banner-text { flex: 1; max-width: 540px; }
+    .rc-video-kicker {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #ff8a93;
+      margin-bottom: 16px;
+    }
+    .rc-video-title {
+      font-size: clamp(2.6rem, 6vw, 4.4rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      margin: 0 0 18px;
+      letter-spacing: -1px;
+    }
+    .rc-video-desc {
+      font-size: 1.08rem;
+      line-height: 1.6;
+      color: #aeb8cc;
+      margin: 0 0 28px;
+    }
+    .rc-video-cta {
+      display: inline-block;
+      background: #e11d2e;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 14px 30px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .rc-video-cta:hover { background: #c41624; transform: translateY(-2px); }
+    .rc-video-frame {
+      flex-shrink: 0;
+      width: 300px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+      background: #000;
+      line-height: 0;
+    }
+    .rc-video {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 9 / 16;
+      object-fit: cover;
+    }
+    @media (max-width: 860px) {
+      .rc-video-banner { padding: 40px 0; }
+      .rc-video-banner-inner { flex-direction: column; gap: 32px; text-align: center; }
+      .rc-video-banner-text { max-width: 100%; }
+      .rc-video-kicker { letter-spacing: 1.5px; }
+      .rc-video-frame { width: 248px; }
+    }
+  </style>
+
+  <section class="product-hero" id="muangay">
     <div class="container product-hero-inner">
       <div class="product-hero-visual">
         <div class="product-gallery">
