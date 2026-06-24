@@ -3678,6 +3678,28 @@ body.cart-drawer-open .contact-widget {
   display: block;
   transition: opacity 0.3s var(--ease);
 }
+.product-gallery-main img[hidden],
+.product-gallery-video[hidden] { display: none; }
+.product-gallery-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+  display: block;
+}
+.product-gallery-thumb--video { position: relative; }
+.product-gallery-thumb-play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.product-gallery-thumb-play svg { width: 16px; height: 16px; margin-left: 1px; }
 .product-gallery-thumbs {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
