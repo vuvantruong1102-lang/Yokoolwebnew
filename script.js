@@ -971,7 +971,7 @@
   // ============ CONSOLE EASTER EGG ============
   if (typeof console !== 'undefined' && console.log) {
     console.log('%c Yokool ', 'background:#DC143B;color:#fff;font-weight:bold;font-size:14px;padding:4px 8px;');
-    console.log('%c Công nghệ vì cuộc sống tốt đẹp hơn ', 'color:#888;font-style:italic;');
+    console.log('%c Stay powered. Stay Cool ', 'color:#888;font-style:italic;');
     console.log('Build: v2.1 — Google Sheets backend integration');
   }
 })();
