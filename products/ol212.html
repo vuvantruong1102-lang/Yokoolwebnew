@@ -88,6 +88,78 @@
     }
   }
   </script>
+  <style>
+    /* Cuộn mượt khi bấm link chứng nhận */
+    html { scroll-behavior: smooth; }
+    .product-cert-link { font-weight: 700; cursor: pointer; }
+    .product-cert-link a { color: inherit; text-decoration: none; }
+    .product-cert-link a:hover { text-decoration: underline; }
+
+    /* Video trong gallery chính */
+    .product-gallery-video { width: 100%; height: 100%; object-fit: cover; background: #000; display: block; }
+    .product-gallery-thumb--video { position: relative; }
+    .product-gallery-play {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 30px; height: 30px; background: rgba(0,0,0,0.55); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; pointer-events: none;
+    }
+    .product-gallery-play svg { width: 16px; height: 16px; color: #fff; margin-left: 2px; }
+
+    /* ===== Section chứng nhận (4 ô xếp ngang) ===== */
+    .cert-section { padding: 80px 0; scroll-margin-top: 100px; }
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .cert-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      min-height: 260px;
+      padding: 32px 20px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      background: #fff;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .cert-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+      border-color: rgba(0, 0, 0, 0.2);
+    }
+    .cert-card-mark {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cert-card-mark img {
+      max-height: 72px;
+      max-width: 140px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+    .cert-card-mark--rohs img { max-width: 160px; }
+    .cert-card-name { font-size: 15px; font-weight: 600; opacity: 0.75; }
+    .cert-card-hint { font-size: 13px; opacity: 0.55; }
+    @media (max-width: 900px) {
+      .cert-grid { grid-template-columns: repeat(2, 1fr); }
+      .cert-card { min-height: 200px; }
+    }
+    @media (max-width: 520px) {
+      .cert-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .cert-card { min-height: 150px; padding: 22px 14px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -225,6 +297,7 @@
           <li>Sạc cùng lúc 5 thiết bị, công suất tối đa 2500W ở 250V</li>
           <li>Cầu chì 10A và lẫy bảo vệ trẻ em tích hợp sẵn</li>
           <li>Chỉ 127g — nhẹ và compact, hoàn hảo cho mọi chuyến đi</li>
+          <li class="product-cert-link"><a href="#cert-showcase">Tra cứu chứng nhận an toàn của sản phẩm</a></li>
         </ul>
 
         <div class="product-color-section">
@@ -543,6 +616,39 @@
       <div class="tt-modal-embed" id="ttModalEmbed"></div>
     </div>
   </div>
+
+  <!-- ============ CERTIFICATIONS ============ -->
+  <section class="cert-section" id="cert-showcase">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">/ Chứng nhận an toàn</span>
+        <h2 class="section-title">Đạt chuẩn.<em> Kiểm định độc lập.</em></h2>
+      </div>
+
+      <div class="cert-grid">
+        <a class="cert-card" href="../certs/OL212_FCC.pdf" target="_blank" rel="noopener">
+          <span class="cert-card-mark"><img src="../certs/cert-fcc.svg" alt="Chứng nhận FCC"></span>
+          <span class="cert-card-name">Chứng nhận Hoa Kỳ (FCC)</span>
+          <span class="cert-card-hint">Click để xem chứng nhận</span>
+        </a>
+        <a class="cert-card" href="../certs/OL212_CE.pdf" target="_blank" rel="noopener">
+          <span class="cert-card-mark"><img src="../certs/cert-ce.svg" alt="Chứng nhận CE"></span>
+          <span class="cert-card-name">Tiêu chuẩn Châu Âu (CE)</span>
+          <span class="cert-card-hint">Click để xem chứng nhận</span>
+        </a>
+        <a class="cert-card" href="../certs/OL212_UKCA.pdf" target="_blank" rel="noopener">
+          <span class="cert-card-mark"><img src="../certs/cert-ukca.png" alt="Chứng nhận UKCA"></span>
+          <span class="cert-card-name">Tiêu chuẩn Vương quốc Anh</span>
+          <span class="cert-card-hint">Click để xem chứng nhận</span>
+        </a>
+        <a class="cert-card" href="../certs/OL212_ROHS.pdf" target="_blank" rel="noopener">
+          <span class="cert-card-mark cert-card-mark--rohs"><img src="../certs/cert-rohs.png" alt="Chứng nhận RoHS"></span>
+          <span class="cert-card-name">Không chứa chất độc hại</span>
+          <span class="cert-card-hint">Click để xem chứng nhận</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- ============ SPECS TABLE ============ -->
   <section class="specs-section">
