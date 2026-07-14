@@ -98,12 +98,29 @@
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
       border-color: rgba(0, 0, 0, 0.2);
     }
+    /* Khung logo cao bằng nhau để mọi chứng nhận nhìn cân đối */
     .cert-card-mark {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cert-card-mark img {
+      max-height: 72px;
+      max-width: 140px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+    /* MSDS dạng chữ, canh cho tương xứng chiều cao khung logo */
+    .cert-card-mark--text {
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 800;
       font-size: 34px;
       letter-spacing: 1px;
       line-height: 1;
+      color: #3a4250;
     }
     .cert-card-name {
       font-size: 15px;
@@ -487,22 +504,22 @@
 
       <div class="cert-grid">
         <a class="cert-card" href="../certs/JP395_CCC.pdf" target="_blank" rel="noopener">
-          <span class="cert-card-mark">CCC</span>
+          <span class="cert-card-mark"><img src="../certs/cert-ccc.png" alt="Chứng nhận CCC"></span>
           <span class="cert-card-name">Chứng nhận bắt buộc Trung Quốc</span>
           <span class="cert-card-hint">Click để xem chứng nhận</span>
         </a>
         <a class="cert-card" href="../certs/JP395_CE.pdf" target="_blank" rel="noopener">
-          <span class="cert-card-mark">CE</span>
+          <span class="cert-card-mark"><img src="../certs/cert-ce.svg" alt="Chứng nhận CE"></span>
           <span class="cert-card-name">Tiêu chuẩn Châu Âu</span>
           <span class="cert-card-hint">Click để xem chứng nhận</span>
         </a>
         <a class="cert-card" href="../certs/JP395_MSDS.pdf" target="_blank" rel="noopener">
-          <span class="cert-card-mark">MSDS</span>
+          <span class="cert-card-mark cert-card-mark--text">MSDS</span>
           <span class="cert-card-name">Bảng an toàn hóa chất</span>
           <span class="cert-card-hint">Click để xem chứng nhận</span>
         </a>
         <a class="cert-card" href="../certs/JP395_UN38_3.pdf" target="_blank" rel="noopener">
-          <span class="cert-card-mark">UN38.3</span>
+          <span class="cert-card-mark"><img src="../certs/cert-un383.png" alt="Chứng nhận UN38.3"></span>
           <span class="cert-card-name">An toàn vận chuyển pin Lithium</span>
           <span class="cert-card-hint">Click để xem chứng nhận</span>
         </a>
