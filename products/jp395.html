@@ -113,6 +113,12 @@
       object-fit: contain;
       display: block;
     }
+    /* Logo UN38.3 có nhiều viền trắng nên phóng to gấp đôi cho cân với các logo khác */
+    .cert-card-mark--un383 { height: auto; }
+    .cert-card-mark--un383 img {
+      max-height: 144px;
+      max-width: 280px;
+    }
     /* MSDS dạng chữ, canh cho tương xứng chiều cao khung logo */
     .cert-card-mark--text {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -519,7 +525,7 @@
           <span class="cert-card-hint">Click để xem chứng nhận</span>
         </a>
         <a class="cert-card" href="../certs/JP395_UN38_3.pdf" target="_blank" rel="noopener">
-          <span class="cert-card-mark"><img src="../certs/cert-un383.png" alt="Chứng nhận UN38.3"></span>
+          <span class="cert-card-mark cert-card-mark--un383"><img src="../certs/cert-un383.png" alt="Chứng nhận UN38.3"></span>
           <span class="cert-card-name">An toàn vận chuyển pin Lithium</span>
           <span class="cert-card-hint">Click để xem chứng nhận</span>
         </a>
