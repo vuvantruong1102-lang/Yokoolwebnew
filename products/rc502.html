@@ -120,8 +120,11 @@
     /* Cuộn mượt khi bấm link chứng nhận */
     html { scroll-behavior: smooth; }
     .product-cert-link { font-weight: 700; cursor: pointer; }
-    .product-cert-link a { color: inherit; text-decoration: none; }
+    .product-cert-link a { color: #dc143b; text-decoration: none; }
     .product-cert-link a:hover { text-decoration: underline; }
+    /* Link hướng dẫn sử dụng trong bảng thông số */
+    .specs-value a.specs-link { color: #dc143b; font-weight: 600; text-decoration: none; }
+    .specs-value a.specs-link:hover { text-decoration: underline; }
 
     /* ===== Section chứng nhận (các ô xếp ngang) ===== */
     .cert-section { padding: 80px 0; scroll-margin-top: 100px; }
@@ -591,6 +594,10 @@
       </div>
 
       <div class="specs-table">
+        <div class="specs-row">
+          <div class="specs-label">Hướng dẫn sử dụng</div>
+          <div class="specs-value"><a class="specs-link" href="../certs/RC502_UM.pdf" target="_blank" rel="noopener">Tải về hướng dẫn sử dụng sản phẩm</a></div>
+        </div>
         <div class="specs-row">
           <div class="specs-label">Mã sản phẩm</div>
           <div class="specs-value">RC502</div>
