@@ -51,6 +51,29 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* Cuộn mượt khi bấm link chứng nhận */
+    html { scroll-behavior: smooth; }
+    /* Dòng link tra cứu chứng nhận: kế thừa font/màu/kích thước dòng mô tả, chỉ in đậm */
+    .product-cert-link {
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .product-cert-link a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .product-cert-link a:hover { text-decoration: underline; }
+    /* Hàng chứng nhận trong bảng: chừa khoảng cách để header cố định không che khi cuộn tới */
+    #chung-nhan-an-toan { scroll-margin-top: 100px; }
+    #chung-nhan-an-toan .specs-value a {
+      color: inherit;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+    #chung-nhan-an-toan .specs-value a:hover { opacity: 0.75; }
+    .specs-cert-hint { opacity: 0.7; }
+  </style>
   <!-- JSON-LD Product Schema -->
   <script type="application/ld+json">
   {
@@ -211,6 +234,7 @@
           <li>Sạc không dây MagSafe 15W (7.5W cho iPhone) — đặt là sạc</li>
           <li>Màn hình LED hiển thị chính xác % pin còn lại</li>
           <li>Hai phiên bản màu: Đen và Trắng</li>
+          <li class="product-cert-link"><a href="#chung-nhan-an-toan">Tra cứu chứng nhận an toàn của sản phẩm</a></li>
         </ul>
 
         <div class="product-color-section">
@@ -456,9 +480,16 @@
           <div class="specs-label">Màu sắc</div>
           <div class="specs-value">Đen, Trắng</div>
         </div>
-        <div class="specs-row">
+        <div class="specs-row" id="chung-nhan-an-toan">
           <div class="specs-label">Chứng nhận an toàn</div>
-          <div class="specs-value">CCC, CE, RoHS, MSDS, UN38.3</div>
+          <div class="specs-value">
+            <a href="../certs/JP395_CCC.pdf" target="_blank" rel="noopener">CCC</a>,
+            <a href="../certs/JP395_CE.pdf" target="_blank" rel="noopener">CE</a>,
+            <a href="../certs/JP395_RoHS.pdf" target="_blank" rel="noopener">RoHS</a>,
+            <a href="../certs/JP395_MSDS.pdf" target="_blank" rel="noopener">MSDS</a>,
+            <a href="../certs/JP395_UN38_3.pdf" target="_blank" rel="noopener">UN38.3</a>
+            <span class="specs-cert-hint">(Click vào để xem chứng nhận)</span>
+          </div>
         </div>
         <div class="specs-row">
           <div class="specs-label">Mang lên máy bay</div>
