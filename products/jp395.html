@@ -60,10 +60,13 @@
       cursor: pointer;
     }
     .product-cert-link a {
-      color: inherit;
+      color: #dc143b;
       text-decoration: none;
     }
     .product-cert-link a:hover { text-decoration: underline; }
+    /* Link hướng dẫn sử dụng trong bảng thông số */
+    .specs-value a.specs-link { color: #dc143b; font-weight: 600; text-decoration: none; }
+    .specs-value a.specs-link:hover { text-decoration: underline; }
 
     /* ===== Section chứng nhận (4 ô xếp ngang) ===== */
     .cert-section {
@@ -541,6 +544,10 @@
       </div>
 
       <div class="specs-table">
+        <div class="specs-row">
+          <div class="specs-label">Hướng dẫn sử dụng</div>
+          <div class="specs-value"><a class="specs-link" href="../certs/JP395_UM.pdf" target="_blank" rel="noopener">Tải về hướng dẫn sử dụng sản phẩm</a></div>
+        </div>
         <div class="specs-row">
           <div class="specs-label">Mã sản phẩm</div>
           <div class="specs-value">JP395</div>
