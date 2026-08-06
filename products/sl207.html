@@ -239,6 +239,7 @@
         <div class="product-gallery">
           <div class="product-gallery-main">
             <img id="galleryMain" src="../images/product-sl207.jpg" alt="Yokool SL207 ổ điện du lịch đa năng">
+            <video id="galleryVideo" class="product-gallery-video" src="../images/sl207-video.mp4" poster="../images/sl207-video-poster.jpg" muted loop playsinline preload="metadata" style="display:none;"></video>
             <button class="product-gallery-arrow product-gallery-arrow--prev" type="button" id="galleryPrev" aria-label="Ảnh trước">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
@@ -247,7 +248,13 @@
             </button>
           </div>
           <div class="product-gallery-thumbs">
-            <button class="product-gallery-thumb is-active" type="button" data-src="../images/product-sl207.jpg" aria-label="Ảnh SL207 màu trắng">
+            <button class="product-gallery-thumb product-gallery-thumb--video is-active" type="button" data-type="video" aria-label="Video sản phẩm SL207">
+              <img src="../images/sl207-video-poster.jpg" alt="Video SL207">
+              <span class="product-gallery-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+              </span>
+            </button>
+            <button class="product-gallery-thumb" type="button" data-src="../images/product-sl207.jpg" aria-label="Ảnh SL207 màu trắng">
               <img src="../images/product-sl207.jpg" alt="SL207 màu trắng">
             </button>
             <button class="product-gallery-thumb" type="button" data-src="../images/sl207-black.jpg" aria-label="Ảnh SL207 màu đen">
@@ -884,18 +891,35 @@
     // Product gallery + color picker
     (function() {
       const main = document.getElementById('galleryMain');
+      const video = document.getElementById('galleryVideo');
       const thumbs = document.querySelectorAll('.product-gallery-thumb');
       const swatches = document.querySelectorAll('.product-color-swatch[data-image]');
       const colorLabel = document.getElementById('colorLabelValue');
+      // Thumb ảnh đầu tiên (bỏ qua thumb video) — dùng cho color swatch
+      const firstImageThumb = document.querySelector('.product-gallery-thumb:not(.product-gallery-thumb--video)');
 
-      // Thumbnail click
-      thumbs.forEach(t => t.addEventListener('click', () => {
-        const src = t.dataset.src;
-        if (!src || !main) return;
-        main.src = src;
+      function showVideo() {
+        if (main) main.style.display = 'none';
+        if (video) { video.style.display = 'block'; video.play().catch(()=>{}); }
+      }
+      function showImage(src) {
+        if (video) { video.pause(); video.style.display = 'none'; }
+        if (main && src) { main.src = src; main.style.display = 'block'; }
+      }
+      function activate(t) {
+        if (!t) return;
+        if (t.dataset.type === 'video') showVideo();
+        else showImage(t.dataset.src);
         thumbs.forEach(x => x.classList.remove('is-active'));
         t.classList.add('is-active');
-      }));
+      }
+
+      // Thumbnail click
+      thumbs.forEach(t => t.addEventListener('click', () => activate(t)));
+
+      // trạng thái ban đầu
+      const initial = document.querySelector('.product-gallery-thumb.is-active');
+      if (initial) activate(initial);
 
       // Arrow buttons: prev/next cycling through thumbs
       const prevBtn = document.getElementById('galleryPrev');
@@ -908,12 +932,7 @@
       function activateThumb(i) {
         if (!thumbs.length) return;
         const wrapped = ((i % thumbs.length) + thumbs.length) % thumbs.length;
-        const t = thumbs[wrapped];
-        const src = t.dataset.src;
-        if (!src || !main) return;
-        main.src = src;
-        thumbs.forEach(x => x.classList.remove('is-active'));
-        t.classList.add('is-active');
+        activate(thumbs[wrapped]);
       }
       if (prevBtn) prevBtn.addEventListener('click', () => activateThumb(getActiveIndex() - 1));
       if (nextBtn) nextBtn.addEventListener('click', () => activateThumb(getActiveIndex() + 1));
@@ -923,16 +942,14 @@
       swatches.forEach(s => s.addEventListener('click', () => {
         const img = s.dataset.image;
         const color = s.dataset.color;
-        if (!img || !main) return;
+        if (!img) return;
 
-        // Update main hero image
-        main.src = img;
-        // Sync first thumbnail to match
-        if (thumbs[0]) {
-          thumbs[0].dataset.src = img;
-          thumbs[0].querySelector('img').src = img;
-          thumbs.forEach(x => x.classList.remove('is-active'));
-          thumbs[0].classList.add('is-active');
+        // Đổi ảnh trên thumb ảnh đầu tiên và hiển thị
+        if (firstImageThumb) {
+          firstImageThumb.dataset.src = img;
+          const timg = firstImageThumb.querySelector('img');
+          if (timg) timg.src = img;
+          activate(firstImageThumb);
         }
         // Update label
         if (colorLabel) colorLabel.textContent = color;
