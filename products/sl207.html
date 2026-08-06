@@ -892,6 +892,7 @@
     (function() {
       const main = document.getElementById('galleryMain');
       const video = document.getElementById('galleryVideo');
+      const box = document.querySelector('.product-gallery-main');
       const thumbs = document.querySelectorAll('.product-gallery-thumb');
       const swatches = document.querySelectorAll('.product-color-swatch[data-image]');
       const colorLabel = document.getElementById('colorLabelValue');
@@ -899,10 +900,12 @@
 
       function showVideo() {
         if (main) main.style.display = 'none';
+        if (box) box.classList.add('is-video-active');
         if (video) { video.style.display = 'block'; video.play().catch(()=>{}); }
       }
       function showImage(src) {
         if (video) { video.pause(); video.style.display = 'none'; }
+        if (box) box.classList.remove('is-video-active');
         if (main && src) { main.src = src; main.style.display = 'block'; }
       }
       function activate(t) {
