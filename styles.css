@@ -3678,6 +3678,12 @@ body.cart-drawer-open .contact-widget {
   display: block;
   transition: opacity 0.3s var(--ease);
 }
+/* Khi xem video dọc: khung cao vừa phải (4:5) để viền đen mỏng,
+   không cao vống. Xem ảnh thì khung quay lại vuông. */
+.product-gallery-main.is-video-active {
+  aspect-ratio: 4 / 5;
+  background: #000;
+}
 .product-gallery-video {
   width: 100%;
   height: 100%;
