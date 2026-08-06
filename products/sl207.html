@@ -239,7 +239,7 @@
         <div class="product-gallery">
           <div class="product-gallery-main">
             <img id="galleryMain" src="../images/product-sl207.jpg" alt="Yokool SL207 ổ điện du lịch đa năng">
-            <video id="galleryVideo" class="product-gallery-video" src="../images/sl207-video.mp4" poster="../images/sl207-video-poster.jpg" data-ratio="9 / 16" muted loop playsinline preload="metadata" style="display:none;"></video>
+            <video id="galleryVideo" class="product-gallery-video" src="../images/sl207-video.mp4" poster="../images/sl207-video-poster.jpg" muted loop playsinline preload="metadata" style="display:none;"></video>
             <button class="product-gallery-arrow product-gallery-arrow--prev" type="button" id="galleryPrev" aria-label="Ảnh trước">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
@@ -892,7 +892,6 @@
     (function() {
       const main = document.getElementById('galleryMain');
       const video = document.getElementById('galleryVideo');
-      const box = document.querySelector('.product-gallery-main');
       const thumbs = document.querySelectorAll('.product-gallery-thumb');
       const swatches = document.querySelectorAll('.product-color-swatch[data-image]');
       const colorLabel = document.getElementById('colorLabelValue');
@@ -900,16 +899,10 @@
 
       function showVideo() {
         if (main) main.style.display = 'none';
-        if (box) {
-          box.classList.add('is-video-active');
-          const r = (video && video.dataset.ratio) || '9 / 16';
-          box.style.aspectRatio = r;
-        }
         if (video) { video.style.display = 'block'; video.play().catch(()=>{}); }
       }
       function showImage(src) {
         if (video) { video.pause(); video.style.display = 'none'; }
-        if (box) { box.classList.remove('is-video-active'); box.style.aspectRatio = ''; }
         if (main && src) { main.src = src; main.style.display = 'block'; }
       }
       function activate(t) {

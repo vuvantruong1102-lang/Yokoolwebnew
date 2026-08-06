@@ -263,7 +263,7 @@
         <div class="product-gallery">
           <div class="product-gallery-main">
             <img id="galleryMain" src="../images/product-jp395.jpg" alt="Yokool JP395 sạc dự phòng từ tính 10.000mAh">
-            <video id="galleryVideo" class="product-gallery-video" src="../images/jp395-video.mp4" poster="../images/jp395-video-poster.jpg" data-ratio="1 / 1" muted loop playsinline preload="metadata" style="display:none;"></video>
+            <video id="galleryVideo" class="product-gallery-video" src="../images/jp395-video.mp4" poster="../images/jp395-video-poster.jpg" muted loop playsinline preload="metadata" style="display:none;"></video>
             <button class="product-gallery-arrow product-gallery-arrow--prev" type="button" id="galleryPrev" aria-label="Ảnh trước">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
@@ -772,37 +772,17 @@
     (function() {
       const main = document.getElementById('galleryMain');
       const video = document.getElementById('galleryVideo');
-      const box = document.querySelector('.product-gallery-main');
       const thumbs = document.querySelectorAll('.product-gallery-thumb');
       const swatches = document.querySelectorAll('.product-color-swatch[data-image]');
       const colorLabel = document.getElementById('colorLabelValue');
       const firstImageThumb = document.querySelector('.product-gallery-thumb:not(.product-gallery-thumb--video)');
 
-      // Đặt tỉ lệ khung chính theo tỉ lệ thật của video (dọc/vuông), hai bên/ trên dưới có viền đen
-      function applyVideoRatio() {
-        if (!box || !video) return;
-        const w = video.videoWidth, h = video.videoHeight;
-        if (w && h) box.style.setProperty('--video-ratio', w + ' / ' + h);
-      }
-      if (video) {
-        video.addEventListener('loadedmetadata', () => {
-          applyVideoRatio();
-          if (box && box.classList.contains('is-video-active')) box.style.aspectRatio = getComputedStyle(box).getPropertyValue('--video-ratio') || '9 / 16';
-        });
-      }
-
       function showVideo() {
         if (main) main.style.display = 'none';
-        if (box) {
-          box.classList.add('is-video-active');
-          const r = (video && video.dataset.ratio) || box.style.getPropertyValue('--video-ratio');
-          box.style.aspectRatio = r ? r : '9 / 16';
-        }
         if (video) { video.style.display = 'block'; video.play().catch(()=>{}); }
       }
       function showImage(src) {
         if (video) { video.pause(); video.style.display = 'none'; }
-        if (box) { box.classList.remove('is-video-active'); box.style.aspectRatio = ''; }
         if (main && src) { main.src = src; main.style.display = 'block'; }
       }
       function activate(t) {
@@ -818,6 +798,7 @@
       const initial = document.querySelector('.product-gallery-thumb.is-active');
       if (initial) activate(initial);
 
+      // Arrow buttons: prev/next cycling through thumbs
       const prevBtn = document.getElementById('galleryPrev');
       const nextBtn = document.getElementById('galleryNext');
       function getActiveIndex() {
