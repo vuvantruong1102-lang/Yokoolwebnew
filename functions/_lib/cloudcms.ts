@@ -229,6 +229,8 @@ export function renderHeader(): string {
           <div class="nav-dropdown-panel" role="menu">
             <a href="/products/sl207.html" class="nav-leaf">SL207</a>
             <a href="/products/ol212.html" class="nav-leaf">OL212</a>
+            <a href="/products/atlas20.html" class="nav-leaf">ATLAS 20</a>
+            <a href="/products/nano.html" class="nav-leaf">NANO</a>
           </div>
         </div>
 
@@ -287,6 +289,8 @@ export function renderFooter(): string {
           <h4>Sản phẩm</h4>
           <a href="/products/sl207.html">SL207</a>
           <a href="/products/ol212.html">OL212</a>
+          <a href="/products/atlas20.html">ATLAS 20</a>
+          <a href="/products/nano.html">NANO</a>
           <a href="/products/jp395.html">JP395</a>
           <a href="/products/rc502.html">RC502</a>
         </div>
