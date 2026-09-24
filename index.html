@@ -64,7 +64,22 @@
       <nav class="main-nav" aria-label="Điều hướng chính">
         <a href="index.html" class="nav-link">Trang chủ</a>
 
-        <div class="nav-dropdown">
+<div class="nav-dropdown">
+          <button class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">
+            Ổ điện du lịch
+            <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="nav-dropdown-panel" role="menu">
+            <a href="products/sl207.html" class="nav-leaf">SL207</a>
+            <a href="products/ol212.html" class="nav-leaf">OL212</a>
+            <a href="products/atlas20.html" class="nav-leaf">ATLAS 20</a>
+            <a href="products/nano.html" class="nav-leaf">NANO</a>
+          </div>
+        </div>
+
+                <div class="nav-dropdown">
           <button class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">
             Sạc dự phòng
             <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
@@ -85,21 +100,6 @@
           </button>
           <div class="nav-dropdown-panel" role="menu">
             <a href="products/rc502.html" class="nav-leaf">RC502</a>
-          </div>
-        </div>
-
-        <div class="nav-dropdown">
-          <button class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">
-            Ổ điện du lịch
-            <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <div class="nav-dropdown-panel" role="menu">
-            <a href="products/sl207.html" class="nav-leaf">SL207</a>
-            <a href="products/ol212.html" class="nav-leaf">OL212</a>
-            <a href="products/atlas20.html" class="nav-leaf">ATLAS 20</a>
-            <a href="products/nano.html" class="nav-leaf">NANO</a>
           </div>
         </div>
 
@@ -204,14 +204,14 @@
     </div>
   </section>
 
-  <!-- ============ PRODUCTS GRID ============ -->
+  <!-- ============ TRAVEL ADAPTERS GRID ============ -->
   <section class="products-section" id="products">
     <div class="container">
       <div class="section-header">
-        <span class="section-label">/ Bộ sưu tập 2026</span>
-        <h2 class="section-title">Chuyên về <em>ổ điện du lịch</em>.</h2>
+        <span class="section-label">/ Ổ điện du lịch</span>
+        <h2 class="section-title">Chuyên gia về <em>ổ điện du lịch</em>.</h2>
         <p class="section-description">
-          Yokool tập trung vào một thứ và làm tốt thứ đó: ổ điện du lịch đa năng. Cùng dải phụ kiện sạc đi kèm cho người luôn di chuyển.
+          Yokool tập trung vào một thứ và làm tốt thứ đó: ổ điện du lịch đa năng dùng tại 180+ quốc gia, sạc nhanh và an toàn.
         </p>
       </div>
 
@@ -219,51 +219,68 @@
 
         <a href="products/sl207.html" class="product-card">
           <div class="product-card-image">
-            <img src="images/product-sl207.jpg" alt="Ổ điện du lịch Yokool SL207">
+            <img src="images/product-sl207.jpg" alt="Ổ điện du lịch SL207">
             <span class="product-code-badge">SL207</span>
           </div>
           <div class="product-card-info">
-            <h3 class="product-card-title">Ổ điện du lịch Yokool SL207</h3>
+            <h3 class="product-card-title">Ổ điện du lịch SL207</h3>
             <p class="product-card-tagline">PD 35W · 5 thiết bị · 180+ quốc gia</p>
-            <span class="product-card-link">Xem chi tiết →</span>
-          </div>
-        </a>
-
-        <a href="products/ol212.html" class="product-card">
-          <div class="product-card-image">
-            <img src="images/product-ol212.jpg" alt="Ổ điện du lịch Yokool OL212">
-            <span class="product-code-badge">OL212</span>
-          </div>
-          <div class="product-card-info">
-            <h3 class="product-card-title">Ổ điện du lịch Yokool OL212</h3>
-            <p class="product-card-tagline">PD 20W + QC 18W · 5 thiết bị · 127g</p>
-            <span class="product-card-link">Xem chi tiết →</span>
-          </div>
-        </a>
-
-        <a href="products/atlas20.html" class="product-card">
-          <div class="product-card-image">
-            <img src="images/product-atlas20.jpg" alt="Ổ điện du lịch Yokool Atlas 20">
-            <span class="product-code-badge">ATLAS 20</span>
-          </div>
-          <div class="product-card-info">
-            <h3 class="product-card-title">Ổ điện du lịch Yokool Atlas 20</h3>
-            <p class="product-card-tagline">GaN 20W · 2 ổ AC · PD 20W + QC 18W</p>
             <span class="product-card-link">Xem chi tiết →</span>
           </div>
         </a>
 
         <a href="products/nano.html" class="product-card">
           <div class="product-card-image">
-            <img src="images/product-nano.jpg" alt="Ổ điện du lịch Yokool Nano">
+            <img src="images/product-nano.jpg" alt="Ổ điện du lịch Nano">
             <span class="product-code-badge">NANO</span>
           </div>
           <div class="product-card-info">
-            <h3 class="product-card-title">Ổ điện du lịch Yokool Nano</h3>
+            <h3 class="product-card-title">Ổ điện du lịch Nano</h3>
             <p class="product-card-tagline">2500W · Nhỏ như quả bóng bàn · 180+ quốc gia</p>
             <span class="product-card-link">Xem chi tiết →</span>
           </div>
         </a>
+
+        <a href="products/atlas20.html" class="product-card">
+          <div class="product-card-image">
+            <img src="images/product-atlas20.jpg" alt="Ổ điện du lịch Atlas 20">
+            <span class="product-code-badge">ATLAS 20</span>
+          </div>
+          <div class="product-card-info">
+            <h3 class="product-card-title">Ổ điện du lịch Atlas 20</h3>
+            <p class="product-card-tagline">GaN 20W · 2 ổ AC · PD 20W + QC 18W</p>
+            <span class="product-card-link">Xem chi tiết →</span>
+          </div>
+        </a>
+
+        <a href="products/ol212.html" class="product-card">
+          <div class="product-card-image">
+            <img src="images/product-ol212.jpg" alt="Ổ điện du lịch OL212">
+            <span class="product-code-badge">OL212</span>
+          </div>
+          <div class="product-card-info">
+            <h3 class="product-card-title">Ổ điện du lịch OL212</h3>
+            <p class="product-card-tagline">PD 20W + QC 18W · 5 thiết bị · 127g</p>
+            <span class="product-card-link">Xem chi tiết →</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHARGING ACCESSORIES GRID ============ -->
+  <section class="products-section" id="accessories">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">/ Phụ kiện sạc</span>
+        <h2 class="section-title">Sạc dự phòng <em>&amp; củ sạc</em>.</h2>
+        <p class="section-description">
+          Dải phụ kiện sạc đi kèm cho người luôn di chuyển — gọn nhẹ, sạc nhanh, dùng chung mọi thiết bị.
+        </p>
+      </div>
+
+      <div class="products-grid">
 
         <a href="products/jp395.html" class="product-card">
           <div class="product-card-image">
@@ -279,11 +296,11 @@
 
         <a href="products/rc502.html" class="product-card">
           <div class="product-card-image">
-            <img src="images/product-rc502.jpg" alt="Sạc nhanh 65W tích hợp dây rút Yokool RC502">
+            <img src="images/product-rc502.jpg" alt="Củ sạc nhanh Yokool RC502">
             <span class="product-code-badge">RC502</span>
           </div>
           <div class="product-card-info">
-            <h3 class="product-card-title">Sạc nhanh 65W tích hợp dây rút Yokool RC502</h3>
+            <h3 class="product-card-title">Củ sạc nhanh Yokool RC502</h3>
             <p class="product-card-tagline">GaN 65W · Dây Type-C tích hợp · 145g</p>
             <span class="product-card-link">Xem chi tiết →</span>
           </div>
