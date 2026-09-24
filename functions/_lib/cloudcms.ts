@@ -195,7 +195,22 @@ export function renderHeader(): string {
       <nav class="main-nav" aria-label="Điều hướng chính">
         <a href="/index.html" class="nav-link">Trang chủ</a>
 
-        <div class="nav-dropdown">
+<div class="nav-dropdown">
+          <button class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">
+            Ổ điện du lịch
+            <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="nav-dropdown-panel" role="menu">
+            <a href="/products/sl207.html" class="nav-leaf">SL207</a>
+            <a href="/products/ol212.html" class="nav-leaf">OL212</a>
+            <a href="/products/atlas20.html" class="nav-leaf">ATLAS 20</a>
+            <a href="/products/nano.html" class="nav-leaf">NANO</a>
+          </div>
+        </div>
+
+                <div class="nav-dropdown">
           <button class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">
             Sạc dự phòng
             <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
@@ -216,21 +231,6 @@ export function renderHeader(): string {
           </button>
           <div class="nav-dropdown-panel" role="menu">
             <a href="/products/rc502.html" class="nav-leaf">RC502</a>
-          </div>
-        </div>
-
-        <div class="nav-dropdown">
-          <button class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">
-            Ổ điện du lịch
-            <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <div class="nav-dropdown-panel" role="menu">
-            <a href="/products/sl207.html" class="nav-leaf">SL207</a>
-            <a href="/products/ol212.html" class="nav-leaf">OL212</a>
-            <a href="/products/atlas20.html" class="nav-leaf">ATLAS 20</a>
-            <a href="/products/nano.html" class="nav-leaf">NANO</a>
           </div>
         </div>
 
