@@ -41,7 +41,6 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       { loc: `${baseUrl}/products/jp395.html`, priority: '0.9', changefreq: 'weekly' },
       { loc: `${baseUrl}/products/rc502.html`, priority: '0.9', changefreq: 'weekly' },
       { loc: `${baseUrl}/products/sl207.html`, priority: '0.9', changefreq: 'weekly' },
-      { loc: `${baseUrl}/products/ol212.html`, priority: '0.9', changefreq: 'weekly' },
       { loc: `${baseUrl}/products/atlas20.html`, priority: '0.9', changefreq: 'weekly' },
       { loc: `${baseUrl}/products/nano.html`, priority: '0.9', changefreq: 'weekly' },
       { loc: `${baseUrl}/products/nomad25.html`, priority: '0.9', changefreq: 'weekly' },
