@@ -817,11 +817,7 @@
         class="contact-widget-btn contact-widget-btn--zalo"
         aria-label="Chat qua Zalo">
         <span class="contact-widget-label">Chat Zalo</span>
-        <svg class="contact-widget-zalo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M28 4 H72 Q94 4 94 26 V58 Q94 80 72 80 H56 L40 94 Q28 98 30 86 V78 Q6 74 6 52 V26 Q6 4 28 4 Z" fill="#0068FF"/>
-          <path d="M32 12 H68 Q86 12 86 28 V56 Q86 72 68 72 H54 L42 82 Q36 84 38 77 V72 Q14 68 14 50 V28 Q14 12 32 12 Z" fill="#FFFFFF"/>
-          <text x="50" y="48" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="800" font-size="22" fill="#0068FF" letter-spacing="-0.5">Zalo</text>
-        </svg>
+        <img class="contact-widget-zalo-img" src="/images/zalo-icon.png" alt="Zalo" width="120" height="120">
       </a>
 
     `;
