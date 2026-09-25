@@ -700,6 +700,11 @@ input, select, textarea, button {
   gap: 32px;
 }
 
+.products-grid--four {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
 .product-card {
   position: relative;
   background: var(--bg-surface);
@@ -3441,6 +3446,10 @@ body.cart-drawer-open .contact-widget {
 
   .carousel-prev { left: 12px; }
   .carousel-next { right: 12px; }
+
+  .products-grid--four {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
   .products-grid {
     grid-template-columns: 1fr;
