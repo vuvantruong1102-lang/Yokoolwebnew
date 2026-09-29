@@ -1,36 +1,30 @@
 ==========================================================
-CẬP NHẬT TRANG B2B
+SỬA TRANG B2B (video, catalogue, banner chiết khấu)
 ==========================================================
-Giữ nguyên cấu trúc thư mục khi upload lên GitHub (kéo cả folder,
-Add file -> Upload files, chọn ghi đè).
+Giữ nguyên cấu trúc thư mục khi upload lên GitHub (ghi đè).
 
-1. BANNER: dựng lại 3 banner nền xám Apple (#E5E5EA) đồng bộ trang chủ,
-   dùng ảnh mockup bạn gửi:
-   - banner-b2b-1.jpg: JP395 MagSafe (2 mặt, có ô "LOGO HERE")
-   - banner-b2b-2.jpg: củ sạc trắng (có ô "LOGO HERE")
-   - banner-b2b-3.jpg: ổ điện Atlas 70
-   Nội dung banner cập nhật: tiết kiệm tới 25%, in logo miễn phí.
+1. VIDEO KHÔNG CHẠY — đã khắc phục:
+   Nguyên nhân: file video nằm ở thư mục videos/ (thư mục mới), rất dễ
+   bị bỏ sót khi upload -> trên web chỉ thấy poster, bấm play không chạy.
+   Cách sửa: CHUYỂN video vào thư mục images/ (thư mục chắc chắn đã có
+   trên hosting) và dùng thẻ <source>. Video mới: images/yokool-b2b.mp4
+   >>> QUAN TRỌNG: nhớ upload file images/yokool-b2b.mp4 (7MB) lên repo.
+       Có thể XÓA thư mục videos/ cũ nếu đã tạo trước đó, không dùng nữa.
 
-2. KHUNG CHIẾT KHẤU sửa lại:
-   - Khởi điểm (05-100 sp):   -15%
-   - Doanh nghiệp (101-500):  -20%
-   - Enterprise (500+ sp):    -25%
+2. CATALOGUE: thay bằng file mới bạn gửi (Catalogue_Yokool_B2B_2026.pdf).
+   Đã đổi tên thành Catalogue_Yokool_B2B.pdf (giữ nguyên tên để link cũ
+   vẫn chạy). Mô tả cập nhật: giới thiệu đủ 7 sản phẩm.
+   >>> Upload đè file Catalogue_Yokool_B2B.pdf (11.7MB) ở thư mục gốc.
 
-3. IN LOGO CHO KHỞI ĐIỂM: mức Khởi điểm giờ CÓ "In logo công ty miễn
-   phí" (trước đây bị mờ/khóa). Cả 3 mức đều in logo miễn phí.
+3. BANNER SLIDE 3: bỏ ảnh Atlas 70, thay bằng biểu đồ minh họa 3 mức
+   chiết khấu 15% / 20% / 25% theo bậc số lượng (cột Enterprise 25% nổi
+   bật đỏ, cao nhất). File: images/banner-b2b-3.jpg. Nội dung slide đổi
+   thành "Chiết khấu 15%–25%", nút "Xem bảng giá".
 
-4. VIDEO: thêm section "Chất lượng nhìn thấy được" (đặt sau khu "Vì sao
-   chọn Yokool"), nhúng video bạn gửi. Video dọc bên trái, text bên phải.
-
---- FILE MỚI ---
-videos/yokool-b2b.mp4          (video sản phẩm - 7MB)
-images/b2b-video-poster.jpg    (ảnh poster video)
-
---- FILE THAY ĐỔI (upload đè) ---
+--- UPLOAD ĐÈ ---
 b2b.html
-styles.css
-images/banner-b2b-1.jpg, banner-b2b-2.jpg, banner-b2b-3.jpg
-
-LƯU Ý: thư mục videos/ là MỚI - nhớ upload cả thư mục này lên repo.
-Nếu Cloudflare Pages giới hạn dung lượng file, 7MB vẫn OK bình thường.
+Catalogue_Yokool_B2B.pdf          (file mới, ~11.7MB)
+images/banner-b2b-3.jpg           (biểu đồ chiết khấu)
+images/yokool-b2b.mp4             (video - CHUYỂN từ videos/ sang đây)
+images/b2b-video-poster.jpg       (poster video, nếu chưa có)
 ==========================================================
