@@ -6185,3 +6185,75 @@ body.cart-drawer-open .contact-widget {
   .product-qty-row { gap: 10px; }
   .product-stock-badge { font-size: 0.82rem; padding: 8px 14px; }
 }
+
+
+/* ============ B2B VIDEO SHOWCASE ============ */
+.b2b-video {
+  padding: var(--section-padding) 0;
+  background: #E5E5EA;
+}
+
+.b2b-video-inner {
+  display: grid;
+  grid-template-columns: 0.85fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.b2b-video-media {
+  display: flex;
+  justify-content: center;
+}
+
+.b2b-video-player {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 9 / 16;
+  border-radius: 22px;
+  background: #000;
+  object-fit: cover;
+  box-shadow: 0 24px 60px rgba(20, 22, 30, 0.22);
+  display: block;
+}
+
+.b2b-video-content .section-title {
+  margin-top: 8px;
+}
+
+.b2b-video-points {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 32px;
+}
+
+.b2b-video-points li {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 14px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.b2b-video-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+@media (max-width: 860px) {
+  .b2b-video-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .b2b-video-media {
+    order: -1;
+  }
+  .b2b-video-player {
+    max-width: 260px;
+  }
+}
