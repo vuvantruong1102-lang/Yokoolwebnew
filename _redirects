@@ -13,3 +13,6 @@
 
 # Optional: trailing slash cleanup
 /news/             /news                    301
+
+# Category landing: ép trailing slash
+/o-dien-du-lich    /o-dien-du-lich/    301
