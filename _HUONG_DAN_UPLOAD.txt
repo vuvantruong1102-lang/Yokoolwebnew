@@ -1,30 +1,41 @@
-==========================================================
-SỬA TRANG B2B (video, catalogue, banner chiết khấu)
-==========================================================
-Giữ nguyên cấu trúc thư mục khi upload lên GitHub (ghi đè).
+TRANG DANH MỤC "Ổ ĐIỆN DU LỊCH" — HƯỚNG DẪN UPLOAD
+====================================================
+URL mới: https://yokool.vn/o-dien-du-lich/
 
-1. VIDEO KHÔNG CHẠY — đã khắc phục:
-   Nguyên nhân: file video nằm ở thư mục videos/ (thư mục mới), rất dễ
-   bị bỏ sót khi upload -> trên web chỉ thấy poster, bấm play không chạy.
-   Cách sửa: CHUYỂN video vào thư mục images/ (thư mục chắc chắn đã có
-   trên hosting) và dùng thẻ <source>. Video mới: images/yokool-b2b.mp4
-   >>> QUAN TRỌNG: nhớ upload file images/yokool-b2b.mp4 (7MB) lên repo.
-       Có thể XÓA thư mục videos/ cũ nếu đã tạo trước đó, không dùng nữa.
+UP ĐÈ (ghi đè) các file sau, đúng vị trí thư mục:
 
-2. CATALOGUE: thay bằng file mới bạn gửi (Catalogue_Yokool_B2B_2026.pdf).
-   Đã đổi tên thành Catalogue_Yokool_B2B.pdf (giữ nguyên tên để link cũ
-   vẫn chạy). Mô tả cập nhật: giới thiệu đủ 7 sản phẩm.
-   >>> Upload đè file Catalogue_Yokool_B2B.pdf (11.7MB) ở thư mục gốc.
+  [FILE MỚI]
+  o-dien-du-lich/index.html        ← trang landing/category mới
 
-3. BANNER SLIDE 3: bỏ ảnh Atlas 70, thay bằng biểu đồ minh họa 3 mức
-   chiết khấu 15% / 20% / 25% theo bậc số lượng (cột Enterprise 25% nổi
-   bật đỏ, cao nhất). File: images/banner-b2b-3.jpg. Nội dung slide đổi
-   thành "Chiết khấu 15%–25%", nút "Xem bảng giá".
+  [SỬA]
+  _redirects                       ← thêm redirect /o-dien-du-lich → /o-dien-du-lich/
+  styles.css                       ← thêm CSS cho trang landing (phần .odl-*)
+  functions/sitemap.xml.ts         ← thêm /o-dien-du-lich/ vào sitemap
 
---- UPLOAD ĐÈ ---
-b2b.html
-Catalogue_Yokool_B2B.pdf          (file mới, ~11.7MB)
-images/banner-b2b-3.jpg           (biểu đồ chiết khấu)
-images/yokool-b2b.mp4             (video - CHUYỂN từ videos/ sang đây)
-images/b2b-video-poster.jpg       (poster video, nếu chưa có)
-==========================================================
+  [SỬA — chỉ đổi menu "Ổ điện du lịch" thành link + thêm mục "Xem tất cả"]
+  index.html
+  b2b.html
+  bao-hanh.html
+  checkout.html
+  faq.html
+  kich-hoat-bao-hanh.html
+  lien-he.html
+  sl207.html
+  van-chuyen.html
+  products/atlas20.html
+  products/atlas70.html
+  products/jp395.html
+  products/nano.html
+  products/nomad25.html
+  products/ol212.html
+  products/rc502.html
+  products/sl207.html
+
+KHÔNG cần đổi framework, không thêm thư viện. Trang chạy tĩnh qua Cloudflare Pages.
+
+LƯU Ý sau khi up:
+- Link country-guide và một số bài blog đang để trạng thái "sắp có" (không phải link chết).
+  Khi có bài thật, mở o-dien-du-lich/index.html, tìm mảng `countries`/`posts` trong <script>
+  ở cuối <main>, điền `href` là xong.
+- Giá Atlas 70 trên trang sản phẩm gốc đang là "000.000đ" (lỗi data) → card landing để "Liên hệ".
+  Nên sửa giá thật trong products/atlas70.html.
