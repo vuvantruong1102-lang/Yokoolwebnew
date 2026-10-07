@@ -6645,3 +6645,65 @@ a.odl-blog-card:hover { border-color: var(--border-medium); box-shadow: var(--sh
 @media (max-width: 400px) {
   .odl-country-grid { grid-template-columns: 1fr; }
 }
+
+/* ============ NAV: split link + toggle for "Ổ điện du lịch" ============ */
+.nav-dropdown-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.nav-dropdown-link {
+  position: relative;
+  padding: 6px 0;
+  font: inherit;
+  color: var(--text-secondary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.2s var(--ease);
+  white-space: nowrap;
+}
+.nav-dropdown:hover .nav-dropdown-link,
+.nav-dropdown:focus-within .nav-dropdown-link { color: var(--text-primary); }
+.nav-dropdown-link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0; height: 2px;
+  background: var(--brand);
+  transition: width 0.3s var(--ease);
+}
+.nav-dropdown:hover .nav-dropdown-link::after,
+.nav-dropdown:focus-within .nav-dropdown-link::after { width: 100%; }
+/* toggle button: just the chevron, no underline */
+.nav-dropdown-toggle {
+  padding: 6px 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+}
+.nav-dropdown-toggle::after { display: none !important; }
+.nav-dropdown:hover .nav-dropdown-toggle,
+.nav-dropdown:focus-within .nav-dropdown-toggle { color: var(--text-primary); }
+
+@media (max-width: 768px) {
+  /* On mobile the head spreads full width: text left, chevron right */
+  .nav-dropdown-head {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0;
+  }
+  .nav-dropdown-link {
+    flex: 1;
+    font-size: 16px;
+    padding: 12px 0;
+  }
+  .nav-dropdown-link::after { display: none; }
+  .nav-dropdown-toggle {
+    padding: 12px 8px 12px 16px;
+    margin: -12px 0;
+  }
+}

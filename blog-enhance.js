@@ -112,10 +112,15 @@
       toggleBtn.textContent = collapsed ? '+' : '−';
     });
 
-    // Inject TOC vào ĐẦU article-body (sau tiêu đề + ảnh cover, trước nội dung)
-    // Trước đây: document.body.appendChild(toc) → sticky bên phải
-    // Bây giờ: insert vào đầu article-body như block inline
-    articleBody.insertBefore(toc, articleBody.firstChild);
+    // Đặt TOC thành sidebar bên TRÁI của nội dung bài viết.
+    // Bọc article-body + TOC trong một layout 2 cột: TOC trái (sticky), nội dung phải.
+    const parent = articleBody.parentNode;
+    const layout = document.createElement('div');
+    layout.className = 'article-layout';
+    parent.insertBefore(layout, articleBody);
+    layout.appendChild(toc);          // cột trái
+    layout.appendChild(articleBody);  // cột phải
+    toc.classList.add('toc--sidebar');
 
     // Highlight TOC item theo section đang xem
     const tocLinks = toc.querySelectorAll('.toc-list a');
