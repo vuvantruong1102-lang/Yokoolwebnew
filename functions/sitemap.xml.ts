@@ -38,6 +38,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     const staticUrls = [
       { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'daily' },
       { loc: `${baseUrl}/news`, priority: '0.9', changefreq: 'daily' },
+      { loc: `${baseUrl}/o-dien-du-lich/`, priority: '0.9', changefreq: 'weekly' },
       { loc: `${baseUrl}/products/jp395.html`, priority: '0.9', changefreq: 'weekly' },
       { loc: `${baseUrl}/products/rc502.html`, priority: '0.9', changefreq: 'weekly' },
       { loc: `${baseUrl}/products/sl207.html`, priority: '0.9', changefreq: 'weekly' },
