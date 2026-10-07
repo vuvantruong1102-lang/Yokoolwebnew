@@ -579,32 +579,28 @@
   color: #581c87;
 }
 
-/* Tables từ Tiptap Table extension */
+/* Tables từ Tiptap Table extension — khớp giao diện editor */
 .article-body table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;   /* giữ đúng độ rộng cột đã kéo trong editor */
   margin: 24px 0;
   font-size: 15px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  overflow: hidden;
 }
 
 .article-body th,
 .article-body td {
-  padding: 10px 14px;
-  border: 1px solid #e5e7eb;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
   text-align: left;
+  vertical-align: top;
+  word-wrap: break-word;
 }
 
 .article-body th {
-  background: #f9fafb;
+  background: #f3f4f6;
   font-weight: 600;
   color: #111827;
-}
-
-.article-body tr:nth-child(even) td {
-  background: #fafafa;
 }
 
 /* YouTube embed responsive */
