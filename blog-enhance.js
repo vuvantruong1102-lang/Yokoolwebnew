@@ -220,7 +220,7 @@
   // ========================================================
   function init() {
     initReadingProgress();
-    initTOC();
+    // initTOC(); // Đã tắt mục lục theo yêu cầu
     initLightbox();
   }
   if (document.readyState === 'loading') {
