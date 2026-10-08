@@ -171,6 +171,8 @@ ${renderHeader()}
 
 ${renderFooter()}
 
+<script src="/yk-article.js" defer></script>
+
 </body>
 </html>`;
 }
