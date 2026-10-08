@@ -1,0 +1,528 @@
+/* ============================================================
+   yk-article.css — Giao diện trang chi tiết bài viết Yokool
+   Dựng theo bài mẫu "di-australia-dung-o-cam-gi-yokool.html".
+   Load SAU styles.css / news-v2.css / blog-enhance.css để thắng.
+   Scope kép:
+     .article-body            -> nội dung do CMS (TipTap) sinh ra
+     .yk-article / #yk-au-... -> bài dán HTML tay kiểu Australia
+   Chỉ tác động trong vùng bài viết; không đụng header/footer/nav.
+   ============================================================ */
+
+:root {
+  --yk-ink: #10233f;     /* navy — tiêu đề, khối nhấn */
+  --yk-text: #334155;    /* chữ nội dung */
+  --yk-muted: #64748b;   /* chữ phụ, caption */
+  --yk-line: #e2e8f0;    /* đường viền */
+  --yk-surface: #f8fafc; /* nền phụ */
+  --yk-red: #dc143b;     /* màu thương hiệu */
+  --yk-red-ink: #b50f31; /* link đỏ đậm hơn cho tương phản */
+}
+
+/* ------------------------------------------------------------
+   1. Khung bài viết: nền trắng, rộng tối đa ~900px, thoáng
+   ------------------------------------------------------------ */
+.article-body,
+.yk-article {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+  color: var(--yk-text);
+  font-family: "Be Vietnam Pro", Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  line-height: 1.8;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/* Header bài viết: mặc định căn trái, rộng 900px, H1 cỡ vừa phải.
+   Vẫn tôn trọng data-title-align nếu biên tập chọn center/right. */
+.article-header {
+  max-width: 900px;
+  text-align: left;
+}
+
+.article-header[data-title-align="center"] { text-align: center; }
+.article-header[data-title-align="right"]  { text-align: right; }
+
+.article-header .article-title {
+  font-family: "Be Vietnam Pro", Arial, Helvetica, sans-serif;
+  font-size: clamp(30px, 4.8vw, 44px);
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  color: var(--yk-ink);
+  margin: 10px 0 18px;
+}
+
+.article-header .article-category {
+  color: var(--yk-red);
+  border-color: var(--yk-red);
+}
+
+/* Hàng meta theo cùng chiều căn với header (mặc định trái) */
+.article-header .article-meta { justify-content: flex-start; }
+.article-header[data-title-align="center"] .article-meta { justify-content: center; }
+.article-header[data-title-align="right"]  .article-meta { justify-content: flex-end; }
+
+/* ------------------------------------------------------------
+   2. Typography: heading, đoạn văn, danh sách, link
+   ------------------------------------------------------------ */
+.article-body h2,
+.article-body h3,
+.article-body h4,
+.yk-article h1,
+.yk-article h2,
+.yk-article h3 {
+  color: var(--yk-ink);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+.article-body h2,
+.yk-article h2 {
+  font-size: 27px;
+  font-weight: 700;
+  margin: 44px 0 17px;
+  scroll-margin-top: 90px; /* chừa chỗ cho header cố định khi nhảy tới mục */
+}
+
+.article-body h3,
+.yk-article h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 26px 0 12px;
+  scroll-margin-top: 90px;
+}
+
+.article-body h4,
+.yk-article h4 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 22px 0 10px;
+  scroll-margin-top: 90px;
+}
+
+.yk-article h1 {
+  font-size: clamp(30px, 4.8vw, 44px);
+  font-weight: 750;
+  margin: 10px 0 22px;
+  max-width: 790px;
+}
+
+.article-body p,
+.yk-article p {
+  font-size: inherit;
+  line-height: 1.8;
+  color: var(--yk-text);
+  margin: 0 0 17px;
+}
+
+.article-body strong,
+.article-body p strong,
+.yk-article strong {
+  color: var(--yk-ink);
+  font-weight: 600;
+}
+
+.article-body em,
+.yk-article em { font-style: italic; }
+
+.article-body ul,
+.article-body ol,
+.yk-article ul,
+.yk-article ol {
+  padding-left: 24px;
+  margin: 10px 0 22px;
+}
+
+.article-body li,
+.yk-article li { margin: 7px 0; }
+
+.article-body a,
+.yk-article a {
+  color: var(--yk-red-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article-body a:hover,
+.yk-article a:hover { color: var(--yk-ink); }
+
+.article-body a:focus-visible,
+.yk-article a:focus-visible,
+.yk-article summary:focus-visible {
+  outline: 3px solid var(--yk-red);
+  outline-offset: 4px;
+}
+
+/* Đoạn mở đầu nổi bật (lede) — khớp .yk-lead của mẫu */
+.article-body .article-lede,
+.yk-article .yk-lead {
+  font-size: 19px;
+  line-height: 1.75;
+  color: var(--yk-text);
+  font-weight: 400;
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin: 0 0 17px;
+}
+
+/* Nhãn chuyên mục nhỏ màu đỏ trong nội dung dán tay */
+.yk-article .yk-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--yk-red);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ------------------------------------------------------------
+   3. Thẻ tóm tắt thông số (metric cards) — nền navy, chữ trắng
+      Chỉ dùng khi bài có markup .yk-metrics (dán tay).
+   ------------------------------------------------------------ */
+.yk-article .yk-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 26px 0;
+}
+
+.yk-article .yk-metric {
+  background: var(--yk-ink);
+  border-radius: 12px;
+  padding: 19px 16px;
+  color: #fff;
+}
+
+.yk-article .yk-metric small {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #cbd5e1;
+}
+
+.yk-article .yk-metric b {
+  display: block;
+  font-size: 27px;
+  line-height: 1.3;
+  margin-top: 5px;
+  color: #fff;
+}
+
+/* ------------------------------------------------------------
+   4. Mục lục (TOC)
+   ------------------------------------------------------------ */
+.article-body .yk-toc,
+.yk-article .yk-toc {
+  background: var(--yk-surface);
+  border: 1px solid var(--yk-line);
+  border-radius: 12px;
+  padding: 20px 23px;
+  margin: 30px 0;
+}
+
+.article-body .yk-toc > p,
+.yk-article .yk-toc > p { margin: 0 0 10px; }
+
+.article-body .yk-toc ol,
+.yk-article .yk-toc ol {
+  margin: 0;
+  font-size: 15px;
+}
+
+/* ------------------------------------------------------------
+   5. Bảng — header navy, viền ngang, bo góc, sọc nền
+      (đồng bộ với news-v2.css; TipTap không xuất <thead>
+       nên nhắm hàng đầu tiên chứa <th>)
+   ------------------------------------------------------------ */
+.article-body .yk-table-wrap,
+.yk-article .yk-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--yk-line);
+  border-radius: 12px;
+  margin: 22px 0 10px;
+}
+
+.article-body table,
+.yk-article table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin: 22px 0;
+  font-size: 15px;
+  line-height: 1.65;
+  background: #fff;
+  border: 1px solid var(--yk-line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Khi bảng nằm trong wrapper cuộn thì wrapper lo bo góc/viền */
+.article-body .yk-table-wrap table,
+.yk-article .yk-table-wrap table {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.article-body th,
+.article-body td,
+.yk-article th,
+.yk-article td {
+  padding: 14px 17px;
+  text-align: left;
+  vertical-align: top;
+  border: 0;
+  border-bottom: 1px solid var(--yk-line);
+  overflow-wrap: anywhere;
+}
+
+.article-body table tr:first-child th,
+.article-body thead th,
+.yk-article thead th,
+.yk-article table tr:first-child th {
+  background: var(--yk-ink);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Bảng dạng key–value (cột trái là <th> từng hàng) — bài dán tay */
+.yk-article tbody th {
+  width: 43%;
+  font-weight: 600;
+  color: var(--yk-ink);
+  background: transparent;
+}
+
+.article-body table tr:nth-child(even) td,
+.yk-article tbody tr:nth-child(even) { background: var(--yk-surface); }
+
+.article-body table tr:last-child th,
+.article-body table tr:last-child td,
+.yk-article tbody tr:last-child th,
+.yk-article tbody tr:last-child td { border-bottom: 0; }
+
+/* ------------------------------------------------------------
+   6. Ảnh & figure
+   ------------------------------------------------------------ */
+.article-body img,
+.yk-article img {
+  max-width: 100%;
+  height: auto;
+}
+
+.article-body figure,
+.yk-article .yk-figure {
+  display: block;
+  margin: 26px 0 32px;
+  padding: 0;
+  background: #fff;
+  border: 1px solid var(--yk-line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.article-body figure img,
+.yk-article .yk-figure img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+  object-fit: contain;
+}
+
+.article-body figure figcaption,
+.yk-article .yk-figure figcaption {
+  padding: 13px 17px;
+  background: var(--yk-surface);
+  color: var(--yk-muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+/* Caption rời (không bọc figure) */
+.article-body .yk-caption,
+.yk-article .yk-caption {
+  font-size: 13px;
+  color: var(--yk-muted);
+  margin: 10px 0 24px;
+  line-height: 1.6;
+}
+
+/* Sơ đồ ổ cắm dạng SVG cạnh chú thích (bài dán tay) */
+.yk-article .yk-plug-figure {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin: 23px 0;
+  padding: 24px;
+  background: var(--yk-surface);
+  border: 1px solid var(--yk-line);
+  border-radius: 14px;
+}
+
+.yk-article .yk-plug-figure svg { width: 150px; height: auto; flex: none; display: block; }
+.yk-article .yk-plug-figure figcaption { font-size: 15px; line-height: 1.65; }
+.yk-article .yk-plug-figure figcaption b { display: block; font-size: 19px; color: var(--yk-ink); margin-bottom: 6px; }
+
+/* ------------------------------------------------------------
+   7. Khối lưu ý / thông tin
+      - .yk-note / blockquote  -> nền đỏ nhạt, viền trái đỏ
+      - .yk-safety             -> trung tính (nền xám, viền navy)
+      - .callout-* đã có sẵn, không đụng
+   ------------------------------------------------------------ */
+.article-body blockquote,
+.yk-article .yk-note {
+  border-left: 4px solid var(--yk-red);
+  border-radius: 0 10px 10px 0;
+  padding: 18px 21px;
+  background: #fff4f6;
+  margin: 24px 0;
+  font-style: normal;
+  color: var(--yk-text);
+}
+
+.article-body blockquote p:last-child,
+.yk-article .yk-note p:last-child { margin-bottom: 0; }
+
+.yk-article .yk-safety {
+  border-left-color: var(--yk-ink);
+  background: #f1f5f9;
+}
+
+/* Khối "nhãn INPUT" dạng mono (bài dán tay) */
+.yk-article .yk-input {
+  display: block;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background: var(--yk-surface);
+  padding: 20px;
+  font-family: Consolas, "SF Mono", Menlo, monospace;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--yk-ink);
+  margin: 20px 0;
+  white-space: normal;
+}
+
+/* ------------------------------------------------------------
+   8. CTA trong nội dung (bài dán tay dùng .yk-cta)
+      CTA mặc định của template (.article-cta) giữ nguyên.
+   ------------------------------------------------------------ */
+.yk-article .yk-cta {
+  background: var(--yk-ink);
+  color: #e2e8f0;
+  padding: 28px;
+  border-radius: 14px;
+  margin: 29px 0;
+}
+
+.yk-article .yk-cta strong { color: #fff; font-size: 21px; }
+.yk-article .yk-cta p { margin: 0 0 15px; }
+
+.yk-article a.yk-button {
+  display: inline-block;
+  background: var(--yk-red);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------
+   9. FAQ (bài dán tay dùng .yk-faq; FAQ của CMS dùng .faq-item,
+      đã có style riêng trong news-v2.css — không đụng)
+   ------------------------------------------------------------ */
+.yk-article .yk-faq {
+  border-top: 1px solid var(--yk-line);
+  padding: 19px 0;
+}
+
+.yk-article .yk-faq h3 { margin: 0 0 9px; font-size: 18px; letter-spacing: 0; }
+.yk-article .yk-faq p { margin: 0; font-size: 16px; }
+
+/* ------------------------------------------------------------
+   10. Bài liên quan (dán tay) + nguồn tham khảo
+       Related cards của template (.related-card) giữ nguyên.
+   ------------------------------------------------------------ */
+.yk-article .yk-related {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.yk-article .yk-related li {
+  margin: 0;
+  border: 1px solid var(--yk-line);
+  border-radius: 10px;
+  padding: 17px;
+  background: var(--yk-surface);
+}
+
+.yk-article .yk-related a { font-size: 15px; font-weight: 600; }
+
+.article-body .yk-sources,
+.yk-article .yk-sources {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--yk-muted);
+}
+
+.article-body .yk-sources a,
+.yk-article .yk-sources a { color: #475569; }
+
+/* ------------------------------------------------------------
+   11. Mục lục tự sinh (JS) — ẩn khi JS chưa chạy để tránh nháy
+   ------------------------------------------------------------ */
+.article-body .yk-toc-auto[hidden] { display: none; }
+
+/* ------------------------------------------------------------
+   12. Responsive
+   ------------------------------------------------------------ */
+@media (max-width: 600px) {
+  .article-body,
+  .yk-article {
+    padding: 0 16px;
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .article-body h2,
+  .yk-article h2 { font-size: 23px; margin-top: 35px; }
+  .article-body h3,
+  .yk-article h3 { font-size: 19px; }
+
+  .article-body .article-lede,
+  .yk-article .yk-lead { font-size: 17px; }
+
+  .yk-article .yk-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .yk-article .yk-metric { padding: 15px 10px; }
+  .yk-article .yk-metric b { font-size: 22px; }
+  .yk-article .yk-metric small { font-size: 10px; }
+
+  .article-body th,
+  .article-body td,
+  .yk-article th,
+  .yk-article td { padding: 12px 10px; font-size: 14px; }
+
+  .yk-article .yk-plug-figure { gap: 16px; padding: 18px; }
+  .yk-article .yk-plug-figure svg { width: 100px; }
+
+  .yk-article .yk-related { grid-template-columns: 1fr; }
+  .yk-article .yk-cta { padding: 23px 20px; }
+}
+
+@media print {
+  .article-body .yk-toc,
+  .yk-article .yk-toc { display: none; }
+}

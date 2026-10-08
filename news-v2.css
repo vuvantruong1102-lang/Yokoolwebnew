@@ -579,28 +579,49 @@
   color: #581c87;
 }
 
-/* Tables từ Tiptap Table extension — khớp giao diện editor */
+/* Tables từ Tiptap Table extension — style cao cấp giống bài mẫu Singapore */
 .article-body table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;   /* giữ đúng độ rộng cột đã kéo trong editor */
-  margin: 24px 0;
+  margin: 22px 0;
   font-size: 15px;
+  line-height: 1.65;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;   /* để bo góc ăn vào cả hàng header */
 }
 
 .article-body th,
 .article-body td {
-  padding: 8px 12px;
-  border: 1px solid #d1d5db;
+  padding: 14px 17px;
   text-align: left;
   vertical-align: top;
-  word-wrap: break-word;
+  border: 0;
+  border-bottom: 1px solid #e2e8f0;   /* chỉ kẻ ngang, bỏ kẻ dọc */
+  word-break: normal;
+  overflow-wrap: anywhere;
 }
 
-.article-body th {
-  background: #f3f4f6;
-  font-weight: 600;
-  color: #111827;
+/* Hàng tiêu đề: nền navy, chữ trắng.
+   TipTap không xuất <thead> — hàng đầu chứa <th> nên nhắm theo hàng đầu tiên. */
+.article-body table tr:first-child th,
+.article-body thead th {
+  background: #10233f;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Sọc nền hàng chẵn (bỏ qua hàng tiêu đề đầu) */
+.article-body table tr:nth-child(even) td {
+  background: #f8fafc;
+}
+
+/* Hàng cuối bỏ viền dưới cho gọn */
+.article-body table tr:last-child th,
+.article-body table tr:last-child td {
+  border-bottom: 0;
 }
 
 /* YouTube embed responsive */
