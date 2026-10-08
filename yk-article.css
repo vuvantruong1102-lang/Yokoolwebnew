@@ -434,6 +434,12 @@
   margin: 29px 0;
 }
 
+/* Eyebrow bên trong CTA: xám sáng trên nền navy (khớp mẫu) */
+:is(.article-body, .yk-article) .yk-cta .yk-eyebrow {
+  color: #94a3b8;
+  display: block;
+  margin-bottom: 8px;
+}
 :is(.article-body, .yk-article) .yk-cta strong { color: #fff; font-size: 21px; }
 /* Chữ và link thường trong CTA phải sáng màu trên nền navy
    (ghi đè .article-body p/a mặc định). */
