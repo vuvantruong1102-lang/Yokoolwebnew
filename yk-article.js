@@ -97,7 +97,9 @@
       var li = document.createElement('li');
       var a = document.createElement('a');
       a.href = '#' + h.id;
-      a.textContent = h.textContent;
+      // Bỏ số thứ tự có sẵn ở đầu tiêu đề (vd "1. ", "2) ", "III. ")
+      // để <ol> không tự đánh số thêm lần nữa -> tránh số kép.
+      a.textContent = (h.textContent || '').replace(/^\s*(\d+|[IVXLCDM]+)\s*[.)\-–]\s*/i, '').trim();
       li.appendChild(a);
       ol.appendChild(li);
     });
