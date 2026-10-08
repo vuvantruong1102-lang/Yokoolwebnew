@@ -289,6 +289,19 @@
   font-weight: 700;
 }
 
+/* Chữ trong ô tiêu đề (kể cả <strong>, <b>, <span>, link) luôn trắng.
+   Ghi đè các rule color đen áp cho strong/span trong styles.css. */
+.article-body table tr:first-child th,
+.article-body table tr:first-child th *,
+.article-body thead th,
+.article-body thead th *,
+.yk-article thead th,
+.yk-article thead th *,
+.yk-article table tr:first-child th,
+.yk-article table tr:first-child th * {
+  color: #fff !important;
+}
+
 /* Bảng dạng key–value (cột trái là <th> từng hàng) — bài dán tay */
 .yk-article tbody th {
   width: 43%;

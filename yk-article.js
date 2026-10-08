@@ -54,8 +54,31 @@
   });
 
   // --- 3. Tự sinh mục lục cho bài dài --------------------------
-  // Bỏ qua nếu bài đã có mục lục (dán tay .yk-toc hoặc nav mục lục).
-  var hasToc = body.querySelector('.yk-toc, nav[aria-label="Mục lục"]');
+  // Bỏ qua nếu bài ĐÃ có mục lục. Nhận diện rộng, phòng khi CMS lọc
+  // mất class khi biên tập dán HTML:
+  //   a) có .yk-toc / nav[aria-label*="ục lục"]
+  //   b) hoặc có tiêu đề "Nội dung bài viết" / "Mục lục"
+  //   c) hoặc có một danh sách (ol/ul) mà phần lớn link trỏ tới #anchor
+  //      nội bộ của bài (đặc trưng của mọi mục lục)
+  function looksLikeToc() {
+    if (body.querySelector('.yk-toc, nav[aria-label*="ục lục"], nav[aria-label*="ội dung"]')) return true;
+
+    var heads = body.querySelectorAll('p strong, p b, h2, h3, h4, nav > p, nav strong');
+    for (var i = 0; i < heads.length; i++) {
+      var t = (heads[i].textContent || '').trim().toLowerCase();
+      if (t === 'nội dung bài viết' || t === 'mục lục' || t === 'nội dung') return true;
+    }
+
+    var lists = body.querySelectorAll('ol, ul');
+    for (var j = 0; j < lists.length; j++) {
+      var links = lists[j].querySelectorAll('a[href^="#"]');
+      var items = lists[j].children.length;
+      if (links.length >= 3 && items > 0 && links.length >= items * 0.6) return true;
+    }
+    return false;
+  }
+
+  var hasToc = looksLikeToc();
   var h2s = Array.prototype.filter.call(headings, function (h) {
     return h.tagName === 'H2';
   });
